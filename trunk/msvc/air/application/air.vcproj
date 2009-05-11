@@ -168,6 +168,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\sort\InsertionSort.h"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
