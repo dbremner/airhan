@@ -179,6 +179,10 @@
 				RelativePath="..\..\..\sort\MergeSort.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\sort\SelectionSort.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

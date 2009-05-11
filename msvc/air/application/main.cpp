@@ -5,6 +5,7 @@
 #include "sort/MergeSort.h"
 #include "sort/BubbleSort.h"
 #include "sort/InsertionSort.h"
+#include "sort/SelectionSort.h"
 
 using namespace lianghancn::air::sort;
 
@@ -45,6 +46,15 @@ void insertion_sort()
 	LH_PRINT_SORT_RESULT;
 }
 
+void selection_sort()
+{
+	LH_SORT_RAT;
+
+	SelectionSort(a, 16);
+
+	LH_PRINT_SORT_RESULT;
+}
+
 int main()
 {
    merge_sort();
@@ -52,4 +62,6 @@ int main()
    bubble_sort();
 
    insertion_sort();
+
+   selection_sort();
 }
