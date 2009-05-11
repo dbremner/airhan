@@ -69,6 +69,9 @@ namespace lianghancn
             {
                 if (recursive)
                 {
+					//
+					// TODO - use insertion sort to sort if number of elements down to 8 or 16..
+					//
                     if (n==1)
                     {
                         return;
