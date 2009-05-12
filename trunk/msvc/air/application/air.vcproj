@@ -168,19 +168,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\sort\InsertionSort.h"
-				>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\sort\MergeSort.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\sort\SelectionSort.h"
 				>
 			</File>
 		</Filter>
