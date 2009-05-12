@@ -168,6 +168,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\sort\HeapSort.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\sort\InsertionSort.h"
 				>
 			</File>
