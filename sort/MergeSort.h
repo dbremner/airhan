@@ -62,7 +62,7 @@ namespace lianghancn
             };
 
             //
-            //              MergeSort - sort two arrays in nondecreasing order
+            //              MergeSort - sort two arrays in ascending order
             //              Two implementations : iterative bottom up merge (recursive = false) ; recursive merge (recursive = true)
             //
             template<typename T> void MergeSort(T a[], int n, bool recursive)
