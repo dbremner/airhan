@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\sort\QuickSort.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\sort\SelectionSort.h"
 				>
 			</File>
