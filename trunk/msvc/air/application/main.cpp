@@ -6,10 +6,11 @@
 #include "sort/BubbleSort.h"
 #include "sort/InsertionSort.h"
 #include "sort/SelectionSort.h"
+#include "sort/HeapSort.h"
 
 using namespace lianghancn::air::sort;
 
-#define LH_SORT_RAT int a[16] = {-1, 2, 10, 9, 8, 7, 0, 0, 3, 11, 15, 20, -90, 100, 200, -1}
+#define LH_SORT_RAT int a[16] = {-1, 2, 10, 9, 8, 7, 0, 0, 3, 11, 20, 15, -90, 200, 100, -1}
 
 #define LH_PRINT_SORT_RESULT \
    for (int i = 0; i < 16; i ++) \
@@ -55,6 +56,15 @@ void selection_sort()
 	LH_PRINT_SORT_RESULT;
 }
 
+void heap_sort()
+{
+	LH_SORT_RAT;
+
+	HeapSort(a, 16);
+
+	LH_PRINT_SORT_RESULT;
+}
+
 int main()
 {
    merge_sort();
@@ -64,4 +74,6 @@ int main()
    insertion_sort();
 
    selection_sort();
+
+   heap_sort();
 }
