@@ -8,6 +8,7 @@
 #include "sort/SelectionSort.h"
 #include "sort/HeapSort.h"
 #include "sort/QuickSort.h"
+#include "sort/CountSort.h"
 
 using namespace lianghancn::air::sort;
 
@@ -75,6 +76,20 @@ void quick_sort()
     LH_PRINT_SORT_RESULT;
 }
 
+void count_sort()
+{
+	int a[7] = {7, 6, 5, 4, 3, 2, 1};
+
+    CountSort(a, 7);
+
+    for (int i = 0; i < 7; i ++)
+	{
+		std::cout<<a[i]<<" ";
+	}
+	std::cout<<std::endl;
+}
+
+
 int main()
 {
    merge_sort();
@@ -88,4 +103,6 @@ int main()
    heap_sort();
 
    quick_sort();
+
+   count_sort();
 }
