@@ -7,6 +7,7 @@
 #include "sort/InsertionSort.h"
 #include "sort/SelectionSort.h"
 #include "sort/HeapSort.h"
+#include "sort/QuickSort.h"
 
 using namespace lianghancn::air::sort;
 
@@ -65,6 +66,15 @@ void heap_sort()
 	LH_PRINT_SORT_RESULT;
 }
 
+void quick_sort()
+{
+    LH_SORT_RAT;
+
+    QuickSort(a, 16);
+
+    LH_PRINT_SORT_RESULT;
+}
+
 int main()
 {
    merge_sort();
@@ -76,4 +86,6 @@ int main()
    selection_sort();
 
    heap_sort();
+
+   quick_sort();
 }
