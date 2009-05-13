@@ -96,6 +96,7 @@ namespace lianghancn
                 else
                 {
                     // iterative bottom up merge - it only works if array length is power of 2
+					// TODO - make it work for normal heaps (see Sedgewick book)
                     int m = 1;
                     for (; m < n; m *= 2);
                     if ( m != n)
