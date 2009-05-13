@@ -25,20 +25,23 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ****************************************************************/
 
+#include <iostream>
+#include <assert.h>
+
 namespace lianghancn
 {
 	namespace air
 	{
 		namespace sort
 		{
-			// it only works for positive integer array :- )
-			template<typename T> void CountSort(T a[], int n)
+            // it only works for positive integer array
+			template<typename T> void CountSort(T a[], int n, int k)
 			{
-				T* pCount = new T[256];
+				T* pCount = new T[k];
 				T* pOld = new T[n];
 					
 				// initialize count array
-				for (int i = 0; i < 256; i ++)
+				for (int i = 0; i < k; i ++)
 				{
 					pCount[i] = 0;
 				}
@@ -46,21 +49,22 @@ namespace lianghancn
 				// copy original array and 1st pass over count array
 				for (int i = 0; i < n; i ++)
 				{					
-					pOld[i] = a [i];
+					pOld[i] = a[i];
 					pCount[a[i]] ++;
 				}
 
 				// 2nd pass over count array to make it accumulative
-				for (int i = 1; i < n; i ++)
+				for (int i = 1; i < k; i ++)
 				{
-					pCount[i] = pCount[i - 1] + pCount[i];
+                    pCount[i] = pCount[i - 1] + pCount[i];
 				}
 
 				// final pass over both array to directly put element to its deserved position
-				for (int i = 0; i < n; i ++)
+				for (int i = n - 1; i >= 0; i --)
 				{
-					a[pCount[pOld[i]]] = pOld[i];
-					pCount[pOld[i]] -- ;
+					a[pCount[pOld[i]] - 1] = pOld[i];
+
+                    pCount[pOld[i]] -- ;
 				}
 
 				delete[] pCount;

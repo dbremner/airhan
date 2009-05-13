@@ -78,11 +78,11 @@ void quick_sort()
 
 void count_sort()
 {
-	int a[7] = {7, 6, 5, 4, 3, 2, 1};
+	int a[10] = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 
-    CountSort(a, 7);
+    CountSort(a, 10, 256);
 
-    for (int i = 0; i < 7; i ++)
+    for (int i = 0; i < 10; i ++)
 	{
 		std::cout<<a[i]<<" ";
 	}
