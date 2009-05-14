@@ -60,23 +60,23 @@ namespace lianghancn
 						}
 					}
 
-					_pNodes[_count ++] = item;
-					int index = _count - 1;
+					int index = _count ++;
 					
 					for (int n = _count/2 - 1; n >= 0; n --)
 					{
-						if (_pNodes[n] < item)
+						if (_pNodes[n] > item)
 						{
 							break;
 						}
 						else
 						{
 							_pNodes[index] = _pNodes[n];
-							_pNodes[n] = item;
+						//	_pNodes[n] = item;
 							index = n;
 						}
 					}
 
+					_pNodes[index] = item;
 					return true;
 				}
 
