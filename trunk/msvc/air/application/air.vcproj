@@ -163,38 +163,42 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\..\..\sort\BubbleSort.h"
+			<Filter
+				Name="sort"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\sort\CountSort.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\sort\HeapSort.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\sort\InsertionSort.h"
-				>
-			</File>
-			<File
-				RelativePath=".\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\sort\MergeSort.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\sort\QuickSort.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\sort\SelectionSort.h"
-				>
-			</File>
+				<File
+					RelativePath="..\..\..\sort\BubbleSort.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\sort\CountSort.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\sort\HeapSort.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\sort\InsertionSort.h"
+					>
+				</File>
+				<File
+					RelativePath=".\main.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\sort\MergeSort.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\sort\QuickSort.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\sort\SelectionSort.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
