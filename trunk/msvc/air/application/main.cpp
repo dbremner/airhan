@@ -10,7 +10,10 @@
 #include "sort/QuickSort.h"
 #include "sort/CountSort.h"
 
+#include "datastructures/BinaryHeap.h"
+
 using namespace lianghancn::air::sort;
+using namespace lianghancn::air::datastructures;
 
 #define LH_SORT_RAT int a[16] = {-1, 2, 10, 9, 8, 7, 0, 0, 3, 11, 20, 15, -90, 200, 100, -1}
 
@@ -89,6 +92,20 @@ void count_sort()
 	std::cout<<std::endl;
 }
 
+void binary_heap()
+{
+	BinaryHeap<int> heap(10);
+	heap.Insert(2);
+	heap.Insert(4);
+	heap.Insert(1);
+	heap.Insert(8);
+	heap.Insert(7);
+	heap.Insert(9);
+	heap.Insert(3);
+	heap.Insert(14);
+	heap.Insert(10);
+	heap.Insert(16);
+}
 
 int main()
 {
@@ -105,4 +122,6 @@ int main()
    quick_sort();
 
    count_sort();
+
+   binary_heap();
 }
