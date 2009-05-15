@@ -94,7 +94,7 @@ void count_sort()
 
 void binary_heap()
 {
-	BinaryHeap<int> heap(10);
+	BinaryHeap<int> heap(10, eMinHeap);
 	heap.Insert(2);
 	heap.Insert(4);
 	heap.Insert(1);
@@ -105,6 +105,33 @@ void binary_heap()
 	heap.Insert(14);
 	heap.Insert(10);
 	heap.Insert(16);
+
+	for (int i = 0; i < 10; i ++)
+	{
+		std::cout<<heap.RemoveRoot()<<",";
+	}
+
+	std::cout<<std::endl;
+
+	BinaryHeap<int> heap_max(10, eMaxHeap);
+	heap_max.Insert(2);
+	heap_max.Insert(4);
+	heap_max.Insert(1);
+	heap_max.Insert(8);
+	heap_max.Insert(7);
+	heap_max.Insert(9);
+	heap_max.Insert(3);
+	heap_max.Insert(14);
+	heap_max.Insert(10);
+	heap_max.Insert(16);
+
+	for (int i = 0; i < 10; i ++)
+	{
+		std::cout<<heap_max.RemoveRoot()<<",";
+	}
+
+	std::cout<<std::endl;
+	
 }
 
 int main()

@@ -31,6 +31,12 @@ namespace lianghancn
 	{
 		namespace datastructures
 		{
+			typedef enum 
+			{
+				eMaxHeap,
+				eMinHeap
+			} tHeapType;
+
 			template<typename T> class IHeap
 			{
 			public:

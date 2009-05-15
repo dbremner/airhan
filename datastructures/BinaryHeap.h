@@ -36,9 +36,10 @@ namespace lianghancn
 			template<typename T> class BinaryHeap : public IHeap<T>
 			{
 			public:
-				explicit BinaryHeap(int capacity)
+				BinaryHeap(int capacity, tHeapType eHeapType)
 					: _count(0)
 					, _capacity(capacity)
+					, _tHeapType(eHeapType)
 				{
 					_pNodes = (T*)malloc(sizeof(T)*_capacity);
 				}
@@ -64,14 +65,13 @@ namespace lianghancn
 					
 					for (int n = _count/2 - 1; n >= 0; n --)
 					{
-						if (_pNodes[n] > item)
+						if (HeapComparator(_pNodes[n], item))
 						{
 							break;
 						}
 						else
 						{
 							_pNodes[index] = _pNodes[n];
-						//	_pNodes[n] = item;
 							index = n;
 						}
 					}
@@ -82,7 +82,13 @@ namespace lianghancn
 
 				T RemoveRoot()
 				{
-					return _pNodes[0];
+					T temp = _pNodes[0];
+					_pNodes[0] = _pNodes[_count - 1];
+					_count --;
+
+					FixDown(_pNodes, 0, _count - 1); 
+					
+					return temp;
 				}
 
 				T PeekRoot() const
@@ -91,9 +97,64 @@ namespace lianghancn
 				}
 
 			private:
+				template<typename T> void FixDown(T a[], int root, int bottom)
+				{
+					bool done = false;
+					int swap_child_index = 0;
+
+					while ( 2 * root <= bottom && !done)
+					{
+						int l = 2 * root;
+						int r = l + 1;
+
+						if ( 2 * root == bottom)
+						{
+							swap_child_index = root;
+						}
+						else if (HeapComparator(a[l], a[r]))
+						{
+							swap_child_index = l;
+						}
+						else
+						{
+							swap_child_index = r;
+						}
+
+						if (HeapComparator(a[swap_child_index], a[root]))
+						{
+							T temp = a[root];
+							a[root] = a[swap_child_index];
+							a[swap_child_index] = temp;
+
+							root = swap_child_index;
+						}
+						else
+						{
+							done = true;
+						}
+					}
+				}
+
+				template<typename T> bool HeapComparator(T a, T b)
+				{
+					if (_tHeapType == eMaxHeap)
+					{
+						return a > b ? true : false;
+					}
+					else if (_tHeapType == eMinHeap)
+					{
+						return a < b ? true : false;
+					}
+
+					return false;
+				}
+
+			private:
+
 				T* _pNodes;
 				int _count;
 				int _capacity;
+				tHeapType _tHeapType;
 
 			private:
 				BinaryHeap(const BinaryHeap&);
