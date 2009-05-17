@@ -24,6 +24,8 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 ****************************************************************/
+#ifndef AIRHAN_SORT_INSERTIONSORT_H_
+#define AIRHAN_SORT_INSERTIONSORT_H_
 
 namespace lianghancn
 {
@@ -51,3 +53,5 @@ namespace lianghancn
 		};
 	};
 };
+
+#endif
