@@ -11,6 +11,7 @@
 #include "sort/CountSort.h"
 
 #include "datastructures/BinaryHeap.h"
+#include "datastructures/BinomialHeap.h"
 
 using namespace lianghancn::air::sort;
 using namespace lianghancn::air::datastructures;
