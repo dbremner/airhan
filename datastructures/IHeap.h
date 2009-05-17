@@ -55,13 +55,6 @@ namespace lianghancn
 				IHeap(const IHeap&);
 				IHeap& operator=(const IHeap&); 
 			};
-
-			template<typename T> struct HeapItem
-			{
-				T key;
-				// application specific object handle
-				void* handle; 
-			};
 		};
 	};
 };
