@@ -47,7 +47,7 @@ namespace lianghancn
 				virtual bool Insert(T item) = 0;
 				virtual T RemoveRoot() = 0;
 				virtual T PeekRoot() const = 0;
-
+				
 			protected:
 				IHeap(){};
 
