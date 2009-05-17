@@ -24,6 +24,8 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 ****************************************************************/
+#ifndef AIRHAN_DATASTRUCTURE_IHEAP_H_
+#define AIRHAN_DATASTRUCTURE_IHEAP_H_
 
 namespace lianghancn
 {
@@ -53,6 +55,15 @@ namespace lianghancn
 				IHeap(const IHeap&);
 				IHeap& operator=(const IHeap&); 
 			};
+
+			template<typename T> struct HeapItem
+			{
+				T key;
+				// application specific object handle
+				void* handle; 
+			};
 		};
 	};
 };
+
+#endif
