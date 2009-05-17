@@ -94,7 +94,6 @@ void count_sort()
 
 void binary_heap()
 {
-	/*
 	BinaryHeap<int> heap(10, eMinHeap);
 	heap.Insert(2);
 	heap.Insert(4);
@@ -132,8 +131,6 @@ void binary_heap()
 	}
 
 	std::cout<<std::endl;
-	*/
-	
 }
 
 int main()
