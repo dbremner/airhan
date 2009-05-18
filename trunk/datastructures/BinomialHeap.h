@@ -58,9 +58,19 @@ namespace lianghancn
 					return 0;
 				}
 
-                // fwd declare
+                // fwd declare TODO remove this
                 template<typename T> struct Node;
 
+                // link a with b such that a is the child of b
+                template<typename T> Node<T>* LinkNodes(Node<T>* a, Node<T>* b)
+                {
+                    a->ptr_parent = b;
+                    b->ptr_child = a;
+                    a->ptr_sibling = b->ptr_child;
+                    b->degree = b->degree + 1;
+                }
+
+                // TODO - privaterize these
                 template<typename T> Node<T>* MergeRoots(Node<T>* a, Node<T>* b)
                 {   
                     Node<T>* final = NULL;
@@ -119,6 +129,12 @@ namespace lianghancn
                     return final;
                 }
 
+                // union heap a and b together return new root 
+                template<typename T> Node<T>* HeapUnion(Node<T>* a, Node<T>* b)
+                {
+
+                }
+
                 template<typename T> struct Node
                 {
                     Node* ptr_parent;
@@ -134,6 +150,7 @@ namespace lianghancn
                         , degree(0) {}
                 };
 
+                // root (or roots.. reachable via siblings) of the heap
                 Node<T>* _ptr_root;
 
 			private:
