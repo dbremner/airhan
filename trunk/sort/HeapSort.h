@@ -35,20 +35,23 @@ namespace lianghancn
         {
             template<typename T> void HeapSort(T a[], int n)
             {
+                //
                 // build heap
+                //
                 for (int i = n/2 - 1; i >= 0; i --)
                 {
                     FixDown(a, i, n -1);
                 }
 
-                // in place sort by extract root and fix down the heap
+                //
+                // swap and heapify
+                //
                 for (int i = n -1; i >= 1; i --)
                 {
                     T max = a[0];
                     a[0] = a[i];
-                    a[i] = max; // a[i] is in final place
+                    a[i] = max; 
 
-                    // heapify
                     FixDown(a, 0, i -1);
                 }
             }
@@ -58,14 +61,14 @@ namespace lianghancn
                 bool done = false;
                 int max_child_index = 0;
 
-                while ( 2 * root <= bottom && !done)
+                while ( 2 * root + 1 <= bottom && !done)
                 {
-                    int l = 2 * root;
+                    int l = 2 * root + 1;
                     int r = l + 1;
-                    
-                    if ( 2 * root == bottom)
+                
+                    if ( l == bottom)
                     {
-                        max_child_index = root;
+                        max_child_index = l;
                     }
                     else if (a[l] > a[r])
                     {
