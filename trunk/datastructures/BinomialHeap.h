@@ -40,6 +40,8 @@ namespace lianghancn
 			public:
 				virtual ~BinomialHeap(){};
 
+                BinomialHeap(){};
+
 				bool Insert(T item)
 				{
 					(item);
@@ -48,14 +50,91 @@ namespace lianghancn
 
 				T RemoveRoot()
 				{
-					T a;
-					return a;
+					return 0;
 				}
 
 				T PeekRoot() const
 				{
 					return 0;
 				}
+
+                // fwd declare
+                template<typename T> struct Node;
+
+                template<typename T> Node<T>* MergeRoots(Node<T>* a, Node<T>* b)
+                {   
+                    Node<T>* final = NULL;
+                    Node<T>* current = NULL;
+
+                    if (a == NULL)
+                    {
+                        return b;
+                    }
+
+                    if (b == NULL)
+                    {
+                        return a;
+                    }
+
+                    if (a->degree < b->degree)
+                    {
+                        final = a;
+                        a = a->ptr_sibling;    
+                    }
+                    else
+                    {
+                        final = b;
+                        b = b->ptr_sibling;
+                    }
+
+                    current = final;
+                    current->ptr_sibling = NULL;
+
+                    while ( (a != NULL) && (b != NULL))
+                    {
+                        if (a->degree < b->degree)
+                        {
+                            current->ptr_sibling = a;
+                            a = a->ptr_sibling;
+                        }
+                        else
+                        {
+                            current->ptr_sibling = b;
+                            b = b->ptr_sibling;
+                        }
+
+                        current = current->ptr_sibling;
+                        current->ptr_sibling = NULL;
+                    }
+
+                    if (a != NULL)
+                    {
+                        current->ptr_sibling = a;
+                    }
+                    else
+                    {
+                        current->ptr_sibling = b;
+                    }
+
+                    return final;
+                }
+
+                template<typename T> struct Node
+                {
+                    Node* ptr_parent;
+                    T key;
+                    int degree;
+                    Node* ptr_child;
+                    Node* ptr_sibling;
+
+                    Node()
+                        : ptr_child(NULL)
+                        , ptr_sibling(NULL)
+                        , ptr_parent(NULL)
+                        , degree(0) {}
+                };
+
+                Node<T>* _ptr_root;
 
 			private:
 				BinomialHeap(const BinomialHeap&);

@@ -158,6 +158,44 @@ void binary_heap()
 	std::cout<<std::endl;
 }
 
+
+void binomial_heap()
+{
+    std::cout<<"Binomial Heap Merge Root test"<<std::endl;
+
+    BinomialHeap<int> bheap;
+
+    BinomialHeap<int>::Node<int> node00;
+    BinomialHeap<int>::Node<int> node01;
+    BinomialHeap<int>::Node<int> node02;
+    BinomialHeap<int>::Node<int> node03;
+    BinomialHeap<int>::Node<int> node04;
+    BinomialHeap<int>::Node<int> node05;
+
+    node00.degree = 1; node00.ptr_sibling = &node01;
+    node01.degree = 10; node01.ptr_sibling = &node02;
+    node02.degree = 11; node02.ptr_sibling = &node03;
+    node03.degree = 22; node03.ptr_sibling = &node04;
+    node04.degree = 999; node04.ptr_sibling = &node05;
+    node05.degree = 1055; node05.ptr_sibling = NULL;
+
+    BinomialHeap<int>::Node<int> node10;
+    BinomialHeap<int>::Node<int> node11;
+    BinomialHeap<int>::Node<int> node12;
+
+    node10.degree = 3; node10.ptr_sibling = &node11;
+    node11.degree = 50; node11.ptr_sibling = &node12;
+    node12.degree = 9999; node12.ptr_sibling = NULL;
+
+    BinomialHeap<int>::Node<int>* ptr_node = bheap.MergeRoots(&node00, & node10);
+
+    while (ptr_node != NULL)
+    {
+        std::cout<<ptr_node->degree<<std::endl;
+        ptr_node = ptr_node->ptr_sibling;
+    }
+}
+
 int main()
 {
    merge_sort();
@@ -175,4 +213,6 @@ int main()
    count_sort();
 
    binary_heap();
+
+   binomial_heap();
 }
