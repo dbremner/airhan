@@ -24,6 +24,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 ****************************************************************/
+
 #ifndef AIRHAN_DATASTRUCTURE_BINOMIALHEAP_H_
 #define AIRHAN_DATASTRUCTURE_BINOMIALHEAP_H_
 
@@ -38,19 +39,82 @@ namespace lianghancn
 			template<typename T> class BinomialHeap : public IHeap<T>
 			{
 			public:
-				virtual ~BinomialHeap(){};
+				virtual ~BinomialHeap()
+				{
+					// TODO - free the nodes
+				};
 
-                BinomialHeap(){};
+                BinomialHeap()
+					: _ptr_root (NULL)
+				{
+
+				}
 
 				bool Insert(T item)
 				{
-					(item);
+					Node<T>* node = new Node<T>();
+					node->key = item;
+					
+					_ptr_root = HeapUnion(node, _ptr_root);
 					return true;
 				}
 
 				T RemoveRoot()
 				{
-					return 0;
+					T final = _ptr_root->key;
+					Node<T>* node = _ptr_root;
+					Node<T>* remove = _ptr_root;
+					Node<T>* previous = NULL;
+
+					while (node != NULL)
+					{
+						// TODO - comparator here for min/max heap
+						if (node->key < final)
+						{
+							final = node->key;
+							remove = node;
+						}
+
+						previous = node;
+						node = node->ptr_sibling;
+					}
+
+					if (remove == _ptr_root)
+					{
+						_ptr_root = _ptr_root->ptr_sibling;
+					}
+					else
+					{
+						previous->ptr_sibling = remove->ptr_sibling;
+					}
+
+					Node<T>* child = remove->ptr_child;
+					// reverse linked list problem
+					Node<T>* current = child;
+					if (current == NULL)
+					{
+						return final;
+					}
+
+					Node<T>* next = current->ptr_sibling;
+					Node<T>* remove_tail = NULL;
+					current->ptr_sibling = NULL;
+					
+					while (next != NULL)
+					{
+						Node<T>* temp = next->ptr_sibling;
+						next->ptr_sibling = current;
+						current = next;
+						next = temp;
+						if (next == NULL)
+						{
+							remove_tail = next;
+						}
+					}
+
+					_ptr_root = MergeRoots(_ptr_root, remove_tail);
+
+					return final;
 				}
 
 				T PeekRoot() const
@@ -68,6 +132,8 @@ namespace lianghancn
                     b->ptr_child = a;
                     a->ptr_sibling = b->ptr_child;
                     b->degree = b->degree + 1;
+
+					return b;
                 }
 
                 // TODO - privaterize these
@@ -132,8 +198,49 @@ namespace lianghancn
                 // union heap a and b together return new root 
                 template<typename T> Node<T>* HeapUnion(Node<T>* a, Node<T>* b)
                 {
+					Node<T>* root = MergeRoots(a, b);
+					if (root == NULL)
+					{
+						return NULL;
+					}
 
-                }
+					// this algorithm is described in CLRS..
+					Node<T>* previous = NULL;
+					Node<T>* current = root;
+					Node<T>* next = root->ptr_sibling;
+
+					while (next != NULL)
+					{
+						if (current->degree != next->degree || ((next->ptr_sibling != NULL) && ( next->degree == next->ptr_sibling->degree)))
+						{
+							previous = current;
+							current = next;
+						} // TODO - comparator here to switch between min/max heap
+						else if (current->key < next->key)
+						{
+							current->ptr_sibling = next->ptr_sibling;
+							LinkNodes(next, current);
+						}
+						else
+						{
+							if (previous == NULL)
+							{
+								root = next;
+							}
+							else
+							{
+								previous->ptr_sibling = next;
+							}
+
+							LinkNodes(current, next);
+							current = next;
+						}
+
+						next = current->ptr_sibling;
+					}
+
+					return root;
+                };
 
                 template<typename T> struct Node
                 {
