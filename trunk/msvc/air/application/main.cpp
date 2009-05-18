@@ -203,6 +203,7 @@ void binomial_heap()
 	bio_heap.Insert(0);
 	bio_heap.Insert(-10);
 
+	// now at least the heap is correct structure...
 	/*
 	for (int i = 0; i < 6; i ++)
 	{

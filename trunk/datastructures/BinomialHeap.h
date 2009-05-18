@@ -129,8 +129,8 @@ namespace lianghancn
                 template<typename T> Node<T>* LinkNodes(Node<T>* a, Node<T>* b)
                 {
                     a->ptr_parent = b;
+					a->ptr_sibling = b->ptr_child;
                     b->ptr_child = a;
-                    a->ptr_sibling = b->ptr_child;
                     b->degree = b->degree + 1;
 
 					return b;
