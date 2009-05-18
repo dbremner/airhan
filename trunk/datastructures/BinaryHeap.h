@@ -64,9 +64,11 @@ namespace lianghancn
 						}
 					}
 
+                    // we put new comer at the end of the array in the first place then let it bubble up
 					int index = _count ++;
 					
-					for (int n = _count/2 - 1; n >= 0; n --)
+                    // n is parent index
+					for (int n = (index - 1) / 2; n >= 0; n --)
 					{
 						if (HeapComparator(_pNodes[n], item))
 						{
@@ -105,16 +107,12 @@ namespace lianghancn
 					bool done = false;
 					int swap_child_index = 0;
 
-					while ( 2 * root <= bottom && !done)
+					while ( 2 * root + 1 <= bottom && !done)
 					{
-						int l = 2 * root;
+						int l = 2 * root + 1;
 						int r = l + 1;
 
-						if ( 2 * root == bottom)
-						{
-							swap_child_index = root;
-						}
-						else if (HeapComparator(a[l], a[r]))
+						if (HeapComparator(a[l], a[r]))
 						{
 							swap_child_index = l;
 						}
@@ -138,6 +136,12 @@ namespace lianghancn
 					}
 				}
 
+                //
+                //\param a - parent
+                //\param b - child
+                //\return - true if for max heap, parent > child; for min heap parent < child. as a summary, the func return true whenever both elements
+                // are in correct place in the heap.
+                //
 				template<typename T> bool HeapComparator(T a, T b)
 				{
 					if (_tHeapType == eMaxHeap)
