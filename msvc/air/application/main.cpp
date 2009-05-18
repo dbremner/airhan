@@ -194,7 +194,23 @@ void binomial_heap()
         std::cout<<ptr_node->degree<<std::endl;
         ptr_node = ptr_node->ptr_sibling;
     }
+
+	BinomialHeap<int> bio_heap;
+	bio_heap.Insert(10);
+	bio_heap.Insert(20);
+	bio_heap.Insert(30);
+	bio_heap.Insert(25);
+	bio_heap.Insert(0);
+	bio_heap.Insert(-10);
+
+	/*
+	for (int i = 0; i < 6; i ++)
+	{
+		std::cout<<bio_heap.RemoveRoot()<<",";
+	}
+	*/
 }
+
 
 int main()
 {
