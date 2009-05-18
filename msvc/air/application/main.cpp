@@ -129,6 +129,18 @@ void binary_heap()
 
 	std::cout<<std::endl;
 
+    for (int i = 0; i < 30; i ++)
+    {
+        assert(heap.Insert(i));
+    }
+
+    for (int i = 0; i < 30; i ++)
+    {
+        std::cout<<heap.RemoveRoot()<<",";
+    }
+
+    std::cout<<std::endl;
+
     BinaryHeap<int> heap_max(10, eMaxHeap);
 	heap_max.Insert(2);
 	heap_max.Insert(4);

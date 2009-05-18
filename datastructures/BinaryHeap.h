@@ -57,11 +57,7 @@ namespace lianghancn
 					if (_capacity < _count + 1)
 					{
 						_capacity *= 2;
-						_pNodes = (T*)realloc(_pNodes, _capacity);
-						if (_pNodes == NULL)
-						{
-							return false;
-						}
+						_pNodes = (T*)realloc(_pNodes, _capacity * sizeof(T));
 					}
 
                     // we put new comer at the end of the array in the first place then let it bubble up
