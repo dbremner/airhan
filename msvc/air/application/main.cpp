@@ -66,6 +66,8 @@ void heap_sort()
 {
 	LH_SORT_RAT;
 
+    std::cout<<"Heap Sort"<<std::endl;
+
 	HeapSort(a, 16);
 
 	LH_PRINT_SORT_RESULT;
@@ -95,7 +97,7 @@ void count_sort()
 
 void binary_heap()
 {
-	BinaryHeap<int> heap(10, eMinHeap);
+    BinaryHeap<int> heap(10, eMinHeap);
 	heap.Insert(2);
 	heap.Insert(4);
 	heap.Insert(1);
@@ -112,9 +114,22 @@ void binary_heap()
 		std::cout<<heap.RemoveRoot()<<",";
 	}
 
+    heap.Insert(10);
+    heap.Insert(9);
+    heap.Insert(8);
+    heap.Insert(7);
+    heap.Insert(6);
+
+    std::cout<<std::endl;
+
+    for (int i = 0; i < 5; i ++)
+    {
+        std::cout<<heap.RemoveRoot()<<",";
+    }
+
 	std::cout<<std::endl;
 
-	BinaryHeap<int> heap_max(10, eMaxHeap);
+    BinaryHeap<int> heap_max(10, eMaxHeap);
 	heap_max.Insert(2);
 	heap_max.Insert(4);
 	heap_max.Insert(1);
