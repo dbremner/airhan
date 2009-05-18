@@ -108,7 +108,11 @@ namespace lianghancn
 						int l = 2 * root + 1;
 						int r = l + 1;
 
-						if (HeapComparator(a[l], a[r]))
+                        if ( l == bottom)
+                        {
+                            swap_child_index = l;
+                        }
+						else if (HeapComparator(a[l], a[r]))
 						{
 							swap_child_index = l;
 						}

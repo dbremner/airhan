@@ -114,31 +114,28 @@ void binary_heap()
 		std::cout<<heap.RemoveRoot()<<",";
 	}
 
-    heap.Insert(10);
-    heap.Insert(9);
-    heap.Insert(8);
-    heap.Insert(7);
-    heap.Insert(6);
-
     std::cout<<std::endl;
-
-    for (int i = 0; i < 5; i ++)
-    {
-        std::cout<<heap.RemoveRoot()<<",";
-    }
-
-	std::cout<<std::endl;
 
     for (int i = 0; i < 30; i ++)
     {
         assert(heap.Insert(i));
     }
-
     for (int i = 0; i < 30; i ++)
     {
         std::cout<<heap.RemoveRoot()<<",";
     }
+    std::cout<<std::endl;
 
+    std::cout<<"randomized test"<<std::endl;
+    int a[16] = {-1, 2, 10, 9, 8, 7, 0, 0, 3, 11, 20, 15, -90, 200, 100, -1};
+    for (int i = 0; i < 16; i ++)
+    {
+        heap.Insert(a[i]);
+    }
+    for (int i = 0 ; i < 16; i ++)
+    {
+        std::cout<<heap.RemoveRoot()<<",";
+    }
     std::cout<<std::endl;
 
     BinaryHeap<int> heap_max(10, eMaxHeap);
