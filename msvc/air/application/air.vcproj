@@ -218,6 +218,10 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Queue"
+					>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
