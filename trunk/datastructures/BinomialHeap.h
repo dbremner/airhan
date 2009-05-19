@@ -61,32 +61,49 @@ namespace lianghancn
 
 				T RemoveRoot()
 				{
-					T final = _ptr_root->key;
-					Node<T>* node = _ptr_root;
-					Node<T>* remove = _ptr_root;
-					Node<T>* previous = NULL;
+                    Node<T>* remove = NULL;
+                    T final = _ptr_root->key;
 
-					while (node != NULL)
-					{
-						// TODO - comparator here for min/max heap
-						if (node->key < final)
-						{
-							final = node->key;
-							remove = node;
-						}
+                    {
+                        
+                        Node<T>* current = _ptr_root;
+                        
+                        while(current != NULL)
+                        {
+                            // TODO - comparator here
+                            if (current->key < final)
+                            {
+                                final = current->key;
+                            }
 
-						previous = node;
-						node = node->ptr_sibling;
-					}
+                            current = current->ptr_sibling;
+                        }
 
-					if (remove == _ptr_root)
-					{
-						_ptr_root = _ptr_root->ptr_sibling;
-					}
-					else
-					{
-						previous->ptr_sibling = remove->ptr_sibling;
-					}
+                        current = _ptr_root;
+                        Node<T>* previous = NULL;
+
+                        while(current != NULL)
+                        {
+                            if (current->key == final)
+                            {
+                                break;
+                            }
+
+                            previous = current;
+                            current = current->ptr_sibling;
+                        }
+
+                        if (previous == NULL)
+                        {
+                            remove = _ptr_root;
+                            _ptr_root = _ptr_root->ptr_sibling;
+                        }
+                        else
+                        {
+                            remove = current;
+                            previous->ptr_sibling = current->ptr_sibling;
+                        }
+                    }
 
 					Node<T>* child = remove->ptr_child;
 					// reverse linked list problem
@@ -96,23 +113,20 @@ namespace lianghancn
 						return final;
 					}
 
-					Node<T>* next = current->ptr_sibling;
-					Node<T>* remove_tail = NULL;
-					current->ptr_sibling = NULL;
-					
-					while (next != NULL)
-					{
-						Node<T>* temp = next->ptr_sibling;
-						next->ptr_sibling = current;
-						current = next;
-						next = temp;
-						if (next == NULL)
-						{
-							remove_tail = next;
-						}
-					}
+                    Node<T> *temp1 = child;
+                    Node<T> *temp2 = NULL;
+                    Node<T> *temp3 = NULL;
 
-					_ptr_root = MergeRoots(_ptr_root, remove_tail);
+                    while ( temp1 )
+                    {
+                        child = temp1; //set the head to last node		
+                        temp2= temp1->ptr_sibling; // save the next ptr in temp2
+                        temp1->ptr_sibling = temp3; // change next to privous
+                        temp3 = temp1;
+                        temp1 = temp2;
+                    }
+
+					_ptr_root = MergeRoots(_ptr_root, child);
 
 					return final;
 				}
