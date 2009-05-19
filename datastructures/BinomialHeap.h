@@ -28,6 +28,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 #ifndef AIRHAN_DATASTRUCTURE_BINOMIALHEAP_H_
 #define AIRHAN_DATASTRUCTURE_BINOMIALHEAP_H_
 
+#include <vector>
 #include "IHeap.h"
 
 namespace lianghancn
@@ -41,37 +42,45 @@ namespace lianghancn
 			public:
 				virtual ~BinomialHeap()
 				{
-					// TODO - free the nodes
+                    for (std::vector<Node<T>*>::iterator iterator = _nodes_list.begin(); iterator != _nodes_list.end(); ++ iterator)
+                    {
+                        delete *iterator;
+                    }
 				};
 
-                BinomialHeap()
+                BinomialHeap(tHeapType eHeapType)
 					: _ptr_root (NULL)
+                    , _tHeapType(eHeapType)
 				{
-
 				}
 
 				bool Insert(T item)
 				{
+                    // construct a one node binomial heap
 					Node<T>* node = new Node<T>();
 					node->key = item;
 					
+                    // union current heap with new heap
 					_ptr_root = HeapUnion(node, _ptr_root);
-					return true;
+					
+                    // store the ptr of new node in to the vector so it could be destroyed when heap is destructed else we'd traverse the heap to destroy everything...
+                    _nodes_list.push_back(node);
+                    return true;
 				}
 
 				T RemoveRoot()
 				{
+                    // the min/max node to be removed from binomial tree
                     Node<T>* remove = NULL;
                     T final = _ptr_root->key;
 
-                    {
-                        
+                    {  
+                        // locate the node to be removed
                         Node<T>* current = _ptr_root;
                         
                         while(current != NULL)
                         {
-                            // TODO - comparator here
-                            if (current->key < final)
+                            if (HeapComparator(current->key, final))
                             {
                                 final = current->key;
                             }
@@ -93,6 +102,7 @@ namespace lianghancn
                             current = current->ptr_sibling;
                         }
 
+                        // remove the node from linked root list 
                         if (previous == NULL)
                         {
                             remove = _ptr_root;
@@ -106,17 +116,12 @@ namespace lianghancn
                     }
 
 					Node<T>* child = remove->ptr_child;
-					// reverse linked list problem
-					Node<T>* current = child;
-					if (current == NULL)
-					{
-						return final;
-					}
+                    Node<T>* temp1 = child;
+                    Node<T>* temp2 = NULL;
+                    Node<T>* temp3 = NULL;
 
-                    Node<T> *temp1 = child;
-                    Node<T> *temp2 = NULL;
-                    Node<T> *temp3 = NULL;
-
+                    // reverse the linked list of the child and its siblings, of the node just get removed.
+                    // so new linked list of nodes forms a new binomial heap
                     while ( temp1 )
                     {
                         child = temp1; //set the head to last node		
@@ -126,20 +131,36 @@ namespace lianghancn
                         temp1 = temp2;
                     }
 
+                    // merge the child (and its siblings) with old roots to form new root list of the binomial heap
 					_ptr_root = MergeRoots(_ptr_root, child);
 
 					return final;
 				}
 
+                // TODO - implement this..
 				T PeekRoot() const
 				{
 					return 0;
 				}
 
-                // fwd declare TODO remove this
-                template<typename T> struct Node;
+                private:
+                    // node structure of the binomial heap
+                    template<typename T> struct Node
+                    {
+                        Node* ptr_parent; // pointer to parent
+                        T key; // key payload
+                        int degree; // degree (number of children)
+                        Node* ptr_child; // (ptr to child)
+                        Node* ptr_sibling; // (ptr to sibling)
 
-                // link a with b such that a is the child of b
+                        Node()
+                            : ptr_child(NULL)
+                            , ptr_sibling(NULL)
+                            , ptr_parent(NULL)
+                            , degree(0) {}
+                    };
+
+                // link a with b to make a the child of b
                 template<typename T> Node<T>* LinkNodes(Node<T>* a, Node<T>* b)
                 {
                     a->ptr_parent = b;
@@ -150,9 +171,9 @@ namespace lianghancn
 					return b;
                 }
 
-                // TODO - privaterize these
                 template<typename T> Node<T>* MergeRoots(Node<T>* a, Node<T>* b)
                 {   
+                    // this is actually the problem of two sorted linked list...
                     Node<T>* final = NULL;
                     Node<T>* current = NULL;
 
@@ -229,8 +250,8 @@ namespace lianghancn
 						{
 							previous = current;
 							current = next;
-						} // TODO - comparator here to switch between min/max heap
-						else if (current->key < next->key)
+						} 
+						else if (HeapComparator(current->key, next->key))
 						{
 							current->ptr_sibling = next->ptr_sibling;
 							LinkNodes(next, current);
@@ -255,24 +276,36 @@ namespace lianghancn
 
 					return root;
                 };
+            
+                private:
+                    //
+                    //\param a - parent
+                    //\param b - child
+                    //\return - true if for max heap, parent > child; for min heap parent < child. as a summary, the func return true whenever both elements
+                    // are in correct place in the heap.
+                    //
+                    template<typename T> bool HeapComparator(T a, T b)
+                    {
+                        if (_tHeapType == eMaxHeap)
+                        {
+                            return a > b ? true : false;
+                        }
+                        else if (_tHeapType == eMinHeap)
+                        {
+                            return a < b ? true : false;
+                        }
 
-                template<typename T> struct Node
-                {
-                    Node* ptr_parent;
-                    T key;
-                    int degree;
-                    Node* ptr_child;
-                    Node* ptr_sibling;
+                        return false;
+                    }
 
-                    Node()
-                        : ptr_child(NULL)
-                        , ptr_sibling(NULL)
-                        , ptr_parent(NULL)
-                        , degree(0) {}
-                };
+                private:
 
-                // root (or roots.. reachable via siblings) of the heap
-                Node<T>* _ptr_root;
+                    // root (or roots.. reachable via siblings) of the heap
+                    Node<T>* _ptr_root;
+
+                    std::vector<Node<T>*> _nodes_list;
+
+                    tHeapType _tHeapType;
 
 			private:
 				BinomialHeap(const BinomialHeap&);
