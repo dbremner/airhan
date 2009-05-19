@@ -12,6 +12,7 @@
 
 #include "datastructures/BinaryHeap.h"
 #include "datastructures/BinomialHeap.h"
+#include "datastructures/Deque.h"
 
 using namespace lianghancn::air::sort;
 using namespace lianghancn::air::datastructures;
@@ -185,6 +186,30 @@ void binomial_heap()
 	}
 	
     std::cout<<std::endl;
+}
+
+
+
+void deque_test()
+{
+	Deque<int> deque;
+	// something looks like...
+	// 
+	// come on migrate to google ut soon!
+	assert(deque.Empty());
+	deque.EnqueHead(1);
+	assert( 1 == deque.DequeTail());
+	assert( deque.Empty());
+	// 4,1,2,3
+	deque.EnqueHead(1);
+	deque.EnqueTail(2);
+	deque.EnqueTail(3);
+	deque.EnqueHead(4);
+	assert(deque.DequeTail() == 3);
+	assert(deque.DequeTail() == 2);
+	assert(deque.DequeHead() == 4);
+	assert(deque.Empty() == false);
+	assert(deque.DequeTail() == 1);
 }
 
 int main()

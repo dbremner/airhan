@@ -221,6 +221,10 @@
 				<Filter
 					Name="Queue"
 					>
+					<File
+						RelativePath="..\..\..\datastructures\Deque.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 		</Filter>
