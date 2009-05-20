@@ -226,6 +226,22 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Tree"
+					>
+					<File
+						RelativePath="..\..\..\datastructures\AVLTree.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\datastructures\RedBlackTree.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\datastructures\SplayTree.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
