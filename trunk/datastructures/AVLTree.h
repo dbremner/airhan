@@ -55,6 +55,8 @@ namespace lianghancn
 					int height;
 					Node* left;
 					Node* right;
+					// Node* parent; use this to iterate bottom up to root to rewind the stack.
+					// else use recursion and let compiler maintain the stack..
 
 					Node(T item)
 						: key(item)
@@ -67,7 +69,7 @@ namespace lianghancn
 			public:
 				void Insert(T key)
 				{
-
+					InternalInsert(_root, key);
 				}
 				
 				void Delete(T key)
@@ -119,6 +121,51 @@ namespace lianghancn
 				{
 					root->left = LeftRotate(root->left);
 					return RightRotate(root);
+				}
+
+				void InternalInsert(Node<T>*& node, T item)
+				{
+					if (node == NULL)
+					{
+						node = new Node(item);
+						return;
+					}
+
+					// recursion
+					if (item < node->key)
+					{
+						InternalInsert(node->left, item);
+					}
+					else
+					{
+						InternalInsert(node->right, item);
+					}
+
+					node->height = max(node->left->height, node->right->height) + 1;
+					
+					if (node->right != NULL)
+					{
+						if (node->left->height + 1 == node->right->right->height)
+						{
+							node = LeftRotate(node);
+						}
+						else if (node->left->height + 1 == node->right->left->height)
+						{
+							node = RightLeftRotate(node);
+						}
+					}
+
+					if (node->left != NULL)
+					{
+						if (node->right->height + 1 == node->left->left->height)
+						{
+							node = RightRotate(node);
+						}
+						else if (node->right->height + 1 == node->left->right->height)
+						{
+							node = LeftRightRotate(node);
+						}
+					}
 				}
 
 			private:
