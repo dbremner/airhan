@@ -13,6 +13,9 @@
 #include "datastructures/BinaryHeap.h"
 #include "datastructures/BinomialHeap.h"
 #include "datastructures/Deque.h"
+#include "datastructures/AVLTree.h"
+#include "datastructures/RedBlackTree.h"
+#include "datastructures/SplayTree.h"
 
 using namespace lianghancn::air::sort;
 using namespace lianghancn::air::datastructures;
