@@ -48,6 +48,7 @@ namespace lianghancn
 				AVLTree()
 				{
 					_null = new Node<T>(0, 0, NULL, NULL);
+					// use the null node to prevent checking the nullability of l/r child..
 					_root = _null;
 				}
 
@@ -84,12 +85,43 @@ namespace lianghancn
 				
 				void Delete(T key)
 				{
-
+					InternalDelete(_root, key);
 				}
 				
 				void Traverse()
 				{
 
+				}
+
+				bool Exists(T item)
+				{
+					Node<T>* node = _root;
+
+					while (node != _null)
+					{
+						if (node->key > item)
+						{
+							node = node->left;
+						}
+						else if(node->key < item)
+						{
+							node = node->right;
+						}
+						else
+						{
+							// find
+							break;
+						}
+					}
+
+					if (node == _null)
+					{
+						return false;
+					}
+					else
+					{
+						return true;
+					}
 				}
 
 			private:            
@@ -227,6 +259,88 @@ namespace lianghancn
 						else if(node->right->height+ 1== node->left->right->height )
 						{
 							LeftRightRotate(node);
+						}
+					}
+				}
+
+				void InternalDelete(Node<T>*& node, T item)
+				{
+					while (node != _null)
+					{
+						if (node->key == item)
+						{
+							break;
+						}
+						else if (item < node->key)
+						{
+							node = node->left;
+						}
+						else
+						{
+							node = node->right;
+						}
+					}
+
+					if (node == _null)
+					{
+						return;
+					}
+
+					if (node->right == _null)
+					{
+						Node<T>* delete_node = node;
+						node = node->left;
+
+						delete delete_node;
+					}
+					else 
+					{
+						// use the smallest node in right child as the replacement
+						Node<T>* temp = node->right;
+						while(temp->left!= _null ) 
+						{
+							temp= temp->left;
+						}
+
+						node->key= temp->key;
+					}
+
+					// fix heights
+					AIRHAN_AVL_NODE_UPDATE_HEIGHT(node);
+					if (node->left != _null)
+					{
+						AIRHAN_AVL_NODE_UPDATE_HEIGHT(node->left);
+					}
+
+					if (node->right != _null)
+					{
+						AIRHAN_AVL_NODE_UPDATE_HEIGHT(node->right);
+					}
+
+				}
+
+				void InternalDeleteRotateHelper(Node<T>*& node)
+				{
+					if( node->right->height - node->left->height == 2  )
+					{
+						if(node->right->left->height<= node->right->right->height )
+						{
+							LeftRotate(node);
+						}
+						else
+						{
+							RightLeftRotate(node);
+						}
+					}
+					else if(node->left->height- node->right->height == 2  )
+					{
+						if(node->left->right->height <= node->left->left->height )
+						{
+							RightRotate(node);
+						}
+						else
+						{
+							LeftRightRotate(node);							 
 						}
 					}
 				}

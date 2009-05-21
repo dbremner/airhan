@@ -189,6 +189,18 @@ void binomial_heap()
 	}
 	
     std::cout<<std::endl;
+
+	for (int i = 0; i < 50; i ++)
+	{
+		bio_heap.Insert(rand());
+	}
+
+	for (int i = 0; i < 50; i ++)
+	{
+		std::cout<<bio_heap.RemoveRoot()<<";";
+	}
+
+	std::cout<<"binomail heap test over"<<std::endl;
 }
 
 
@@ -221,8 +233,18 @@ void avl_tree()
     
     for (int i = 0; i <10; i ++)
     {
-		avl.Insert(rand());
+		avl.Insert(i);
     }
+
+	for (int i = 0; i < 10; i ++)
+	{
+		// avl.Delete(i);
+	}
+
+	for (int i = 0; i < 10; i ++)
+	{
+		assert(avl.Exists(i));
+	}
 }
 
 int main()
