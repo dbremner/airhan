@@ -131,9 +131,10 @@ namespace lianghancn
 					Node<T>* pivot = root->right;
 					root->right = pivot->left;
 					UpdateNodeHeight(root);
-                    root->height --; // note root has been rotated down
+                    root->height = pivot->right->height; // root is rotate down and have same height with pivot's child
 					pivot->left = root;
 					UpdateNodeHeight(pivot);
+
 					return pivot;
 				}
 	
@@ -143,7 +144,7 @@ namespace lianghancn
                 //
                 //         A                                                 B
                 //        /                                                  / \
-                //       B                         ----------->           A   C
+                //       B                         ----------->           C   A
                 //      /
                 //     C
                 // 
@@ -154,7 +155,7 @@ namespace lianghancn
 					Node<T>* pivot = root->left;
 					root->left = pivot->right;
 					UpdateNodeHeight(root);
-                    root->height --; // root has been rotated down
+                    root->height = pivot->left->height; // root is rotate down and have same height with pivot's child
 					pivot->right = root;
 					UpdateNodeHeight(pivot);
 
@@ -216,7 +217,7 @@ namespace lianghancn
 
 					UpdateNodeHeight(node);
 					
-                    // this terrible hand coded if else table covers all the cases but .... any better approaches??
+                    // terrible!
 					if (node->right != NULL)
 					{
                         if (node->left != NULL)
