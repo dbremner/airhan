@@ -103,7 +103,14 @@ namespace lianghancn
                         { 
                             node->height = node->right->height + 1; 
                         } 
-                    } 
+                    }
+                    else if (node->right == NULL)
+                    {
+                        if (node->left != NULL)
+                        {
+                            node->height = node->left->height + 1;
+                        }
+                    }
                 }
 
 
@@ -124,9 +131,9 @@ namespace lianghancn
 					Node<T>* pivot = root->right;
 					root->right = pivot->left;
 					UpdateNodeHeight(root);
+                    root->height --; // note root has been rotated down
 					pivot->left = root;
 					UpdateNodeHeight(pivot);
-
 					return pivot;
 				}
 	
@@ -147,6 +154,7 @@ namespace lianghancn
 					Node<T>* pivot = root->left;
 					root->left = pivot->right;
 					UpdateNodeHeight(root);
+                    root->height --; // root has been rotated down
 					pivot->right = root;
 					UpdateNodeHeight(pivot);
 
