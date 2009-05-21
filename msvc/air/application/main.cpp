@@ -215,6 +215,16 @@ void deque_test()
 	assert(deque.DequeTail() == 1);
 }
 
+void avl_tree()
+{
+    AVLTree<int> avl;
+    
+    for (int i = 0; i <10; i ++)
+    {
+        avl.Insert(i);
+    }
+}
+
 int main()
 {
    merge_sort();
@@ -234,4 +244,6 @@ int main()
    binary_heap();
 
    binomial_heap();
+
+   avl_tree();
 }
