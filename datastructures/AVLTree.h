@@ -39,13 +39,16 @@ namespace lianghancn
 			public:
 				virtual ~AVLTree()
 				{
-                    // TODO - traverse the tree and free all stuff ?
+                    delete _null;
+
+					// TODO = traverse the tree to free the nodes.
+					// Better, all nodes should be allocated from a memory pool..
 				}
 
 				AVLTree()
-					: _root(NULL)
 				{
-
+					_null = new Node<T>(0, 0, NULL, NULL);
+					_root = _null;
 				}
 
 			private:
@@ -63,6 +66,13 @@ namespace lianghancn
 						, height(0)
 						, left(NULL)
 						, right(NULL)
+					{}
+
+					Node(T item, int height, Node* left, Node* right)
+						: key(item)
+						, height(height)
+						, left(left)
+						, right(right)
 					{}
 				};
 
@@ -84,58 +94,38 @@ namespace lianghancn
 
 			private:            
 
-                 void UpdateNodeHeight(Node<T>* node)
-                {
-                    if (node->left != NULL && node->right != NULL)             
-                    { 
-                        if(node->left->height > node->right->height) 
-                        { 
-                            node->height = node->left->height + 1; 
-                        } 
-                        else 
-                        { 
-                            node->height = node->right->height + 1; 
-                        } 
-                    } 
-                    else if (node->left == NULL) 
-                    { 
-                        if (node->right != NULL) 
-                        { 
-                            node->height = node->right->height + 1; 
-                        } 
-                    }
-                    else if (node->right == NULL)
-                    {
-                        if (node->left != NULL)
-                        {
-                            node->height = node->left->height + 1;
-                        }
-                    }
-                }
-
+           #define AIRHAN_AVL_NODE_UPDATE_HEIGHT(node) \
+				if (node->left->height > node->right->height) \
+				{ \
+					node->height = node->left->height + 1; \
+				} \
+				else \
+				{ \
+					node->height = node->right->height + 1; \
+				} \
 
                 //
-				// rotate root to left once with root's right child as the pivot
-                // return new root after rotate
+				// rotate root to left once with root's right child as the pivot. the pivot becomes new root while old root becomes left child of new root.
                 //
                 //        A                                             B
                 //          \                                           / \
-                //           B                    ------>            A   C
+                //           B                    ------>         A   C
                 //             \
                 //              C
                 //
                 //    old root A -- > new root B
                 //
-				Node<T>* LeftRotate(Node<T>* root)
+				void LeftRotate(Node<T>*& root)
 				{
 					Node<T>* pivot = root->right;
 					root->right = pivot->left;
-					UpdateNodeHeight(root);
-                    root->height = pivot->right->height; // root is rotate down and have same height with pivot's child
-					pivot->left = root;
-					UpdateNodeHeight(pivot);
+					
+					AIRHAN_AVL_NODE_UPDATE_HEIGHT(root);
 
-					return pivot;
+					pivot->left = root;
+					root = pivot;
+
+					AIRHAN_AVL_NODE_UPDATE_HEIGHT(root);
 				}
 	
                 //
@@ -144,64 +134,63 @@ namespace lianghancn
                 //
                 //         A                                                 B
                 //        /                                                  / \
-                //       B                         ----------->           C   A
+                //       B                         ----------->      C   A
                 //      /
                 //     C
                 // 
                 //      old root A ---> new root B
                 //
-				Node<T>* RightRotate(Node<T>* root)
+				void RightRotate(Node<T>*& root)
 				{
 					Node<T>* pivot = root->left;
 					root->left = pivot->right;
-					UpdateNodeHeight(root);
-                    root->height = pivot->left->height; // root is rotate down and have same height with pivot's child
-					pivot->right = root;
-					UpdateNodeHeight(pivot);
+                    
+					AIRHAN_AVL_NODE_UPDATE_HEIGHT(root);
 
-					return pivot;
+					pivot->right = root;
+					root = pivot;
+
+					AIRHAN_AVL_NODE_UPDATE_HEIGHT(root);
 				}
 
                 //
 				// rotate root's right child right, then rotate root left
-                // return new root after rotate
                 //
                 //             A                                       A                                                  C
                 //               \                                        \                                                / \
-                //                B                -------------->       C              -------------------->          A  B
+                //                B                -------------->  C              --------------------> A  B
                 //               /                                           \ 
                 //              C                                            B
                 //
                 // old root B ---> new root C
                 //
-				Node<T>* RightLeftRotate(Node<T>* root)
+				void RightLeftRotate(Node<T>*& root)
 				{
-					root->right = RightRotate(root->right);
-					return LeftRotate(root);
+					RightRotate(root->right);
+					LeftRotate(root);
 				}
 
                 //
 				// rotate root's left child left, then rotate root right
-                // return new root after rotate
                 //
                 //              A                                             A                                   C
                 //             /                                              /                                    / \
-                //            B                   ------------------>      C     ----------------------->      B  A
+                //            B           ------------------>      C     ------------------>   B  A
                 //              \                                           /
                 //               C                                        B
                 //
                 //       old root B ----> new root C
-				Node<T>* LeftRightRotate(Node<T>* root)
+				void LeftRightRotate(Node<T>*& root)
 				{
-					root->left = LeftRotate(root->left);
-					return RightRotate(root);
+					LeftRotate(root->left);
+					RightRotate(root);
 				}
 
 				void InternalInsert(Node<T>*& node, T item)
 				{
-					if (node == NULL)
+					if (node == _null)
 					{
-						node = new Node<T>(item);
+						node = new Node<T>(item, 0, _null, _null);
 						return;
 					}
 
@@ -215,101 +204,36 @@ namespace lianghancn
 						InternalInsert(node->right, item);
 					}
 
-					UpdateNodeHeight(node);
-					
-                    // terrible!
-					if (node->right != NULL)
+					AIRHAN_AVL_NODE_UPDATE_HEIGHT(node);
+
+					if(node->right != _null )
 					{
-                        if (node->left != NULL)
-                        {
-                            if (node->right->right != NULL)
-                            {
-                                if (node->left->height + 1 == node->right->right->height)
-                                {
-                                    node = LeftRotate(node);
-                                }
-                            }
-                            else if (node->right->left != NULL)
-                            {
-                                if (node->left->height + 1 == node->right->left->height)
-                                {
-                                    node = RightLeftRotate(node);
-                                }
-                            }
-                            else
-                            {
-                                if (node->left->left != NULL)
-                                {
-                                    if (node->right->height + 1 == node->left->left->height)
-                                    {
-                                        node = RightRotate(node);
-                                    }
-                                }
-                                else if (node->left->right != NULL)
-                                {
-                                    if (node->right->height + 1 == node->left->right->height)
-                                    {
-                                        node = LeftRightRotate(node);
-                                    }
-                                }
-                                // else both right and left balance..
-                            }
-                        }
-                        else
-                        {
-                            if (node->right->height > 0)
-                            {
-                                node = LeftRotate(node);
-                            }
-                        }
+						if( node->left->height+ 1== node->right->right->height )
+						{
+							LeftRotate(node);
+						}
+						else if( node->left->height+ 1== node->right->left->height )
+						{
+							RightLeftRotate(node);
+						}
 					}
 
-					if (node->left != NULL)
+					if( node->left != _null )
 					{
-                        if (node->right != NULL)
-                        {
-                            if (node->left->left != NULL)
-                            {
-                                if (node->right->height + 1 == node->left->left->height)
-                                {
-                                    node = RightRotate(node);
-                                }
-                            }
-                            else if (node->left->right != NULL)
-                            {
-                               node = LeftRightRotate(node);
-                            }
-                            else
-                            {
-                                if (node->right->right != NULL)
-                                {
-                                    if (node->left->height + 1 == node->right->right->height)
-                                    {
-                                        node = LeftRotate(node);
-                                    }
-                                }
-                                else if (node->right->left != NULL)
-                                {
-                                    if (node->left->height + 1 == node->right->left->height)
-                                    {
-                                        node = RightLeftRotate(node);
-                                    }
-                                }
-                                // else both right and left are balanced
-                            }
-                        }
-                        else
-                        {
-                            if (node->left->height > 0)
-                            {
-                                node = RightRotate(node);
-                            }
-                        }
+						if( node->right->height+ 1== node->left->left->height )
+						{
+							RightRotate(node);
+						}
+						else if(node->right->height+ 1== node->left->right->height )
+						{
+							LeftRightRotate(node);
+						}
 					}
 				}
 
 			private:
 				Node<T>* _root;
+				Node<T>* _null;
 			};
 		};
 	};
