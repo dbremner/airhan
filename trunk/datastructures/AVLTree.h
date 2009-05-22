@@ -240,11 +240,11 @@ namespace lianghancn
 
 					if(node->right != _null )
 					{
-						if( node->left->height+ 1== node->right->right->height )
+						if( node->left->height + 1== node->right->right->height )
 						{
 							LeftRotate(node);
 						}
-						else if( node->left->height+ 1== node->right->left->height )
+						else if( node->left->height + 1== node->right->left->height )
 						{
 							RightLeftRotate(node);
 						}
@@ -252,11 +252,11 @@ namespace lianghancn
 
 					if( node->left != _null )
 					{
-						if( node->right->height+ 1== node->left->left->height )
+						if( node->right->height + 1== node->left->left->height )
 						{
 							RightRotate(node);
 						}
-						else if(node->right->height+ 1== node->left->right->height )
+						else if(node->right->height + 1== node->left->right->height )
 						{
 							LeftRightRotate(node);
 						}
@@ -265,57 +265,64 @@ namespace lianghancn
 
 				void InternalDelete(Node<T>*& node, T item)
 				{
-					while (node != _null)
-					{
-						if (node->key == item)
-						{
-							break;
-						}
-						else if (item < node->key)
-						{
-							node = node->left;
-						}
-						else
-						{
-							node = node->right;
-						}
-					}
-
 					if (node == _null)
 					{
 						return;
 					}
 
-					if (node->right == _null)
-					{
-						Node<T>* delete_node = node;
-						node = node->left;
+                    if (node->key == item)
+                    {
+                        // right child is null just delete the node and drag left child up as the replacement
+                        if (node->right == _null)
+                        {
+                            Node<T>* delete_node = node;
+                            node = node->left;
 
-						delete delete_node;
-					}
-					else 
-					{
-						// use the smallest node in right child as the replacement
-						Node<T>* temp = node->right;
-						while(temp->left!= _null ) 
-						{
-							temp= temp->left;
-						}
+                            delete delete_node;
+                        }
+                        else 
+                        {
+                            // use the smallest node in right child as the replacement
+                            Node<T>* temp = node->right;
+                            while(temp->left!= _null ) 
+                            {
+                                temp= temp->left;
+                            }
 
-						node->key= temp->key;
-					}
+                            node->key= temp->key;
+
+                            // delete the smallest node in right child - same recursion
+                            InternalDelete(node->right, temp->key);
+
+                            AIRHAN_AVL_NODE_UPDATE_HEIGHT(node);
+                        }
+
+                        return;
+                    }
+
+                    if (item < node->key)
+                    {
+                        InternalDelete(node->left, item);
+                    }
+                    else
+                    {
+                        InternalDelete(node->right, item);
+                    }
 
 					// fix heights
 					AIRHAN_AVL_NODE_UPDATE_HEIGHT(node);
+
 					if (node->left != _null)
 					{
-						AIRHAN_AVL_NODE_UPDATE_HEIGHT(node->left);
+						InternalDeleteRotateHelper(node->left);
 					}
 
 					if (node->right != _null)
 					{
-						AIRHAN_AVL_NODE_UPDATE_HEIGHT(node->right);
+						InternalDeleteRotateHelper(node->right);
 					}
+
+                    InternalDeleteRotateHelper(node);
 
 				}
 

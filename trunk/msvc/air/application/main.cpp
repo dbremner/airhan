@@ -238,12 +238,12 @@ void avl_tree()
 
 	for (int i = 0; i < 10; i ++)
 	{
-		// avl.Delete(i);
+		 avl.Delete(i);
 	}
 
 	for (int i = 0; i < 10; i ++)
 	{
-		assert(avl.Exists(i));
+		assert(!avl.Exists(i));
 	}
 }
 
