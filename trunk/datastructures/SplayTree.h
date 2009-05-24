@@ -34,7 +34,129 @@ namespace lianghancn
 	{
 		namespace datastructures
 		{
+			template<typename T> class SplayTree
+			{
+			public:
+				virtual ~SplayTree()
+				{
+					// TODO - reclaim nodes
+				}
 
+			
+			private:
+				template<typename T> struct Node
+				{
+					Node* left;
+					Node* right;
+					T key;
+
+					Node()
+						: left(NULL)
+						, right(NULL)
+					{
+
+					}
+				};
+
+			private:
+				void Splay(T key, Node<T>*& root)
+				{
+					//
+					// top down splay
+					// algorithm described in the orignial splay tree paper by Sleator and Tarjan / Self-Adjusting Binary Trees
+					// this algorithm searches two nodes at a time, partition the tree into three parts : left tree, middle tree, right tree.
+					// 
+					// left tree - consisting all known nodes with key smaller than target key
+					// right tree - consisting all know nodes with key bigger than target key
+					// middle tree - all nodes doesn't belong to either left tree or right tree
+					//
+					// the search starts at the middle tree (the default tree root) and gets moving down. As the search encounters a node,
+					// it will check the key field of the node and based on what described above, cut the node out of middle tree and put it
+					// into either left tree or right tree; repeat this process until find the key or reach null nodes.
+					// Then assemble left tree with middle tree and right tree to finish the transform (splaying) process.
+					//
+					
+					// left - ptr to left tree
+					// right - ptr to right tree
+					// temp - temp root
+					Node<T> node, *left, *right, *temp;
+					
+					if (root == NULL)
+					{
+						return;
+					}
+
+					left = right = &node;
+
+					for (;;) 
+					{
+						if (key < root->key) 
+						{
+							if (root->left == NULL) 
+							{
+								break;
+							}
+
+							if (key < root->left->key) 
+							{
+								temp = root->left;                           /* rotate right */
+								root->left = temp->right;
+								temp->right = root;
+								root = temp;
+								
+								if (root->left == NULL) 
+								{
+									break;
+								}
+							}
+
+							right->left = root;                               /* link right */
+							right = root;
+							root = root->left;
+						} 
+						else if (key >root->key) 
+						{
+							if (root->right == NULL) 
+							{
+								break;
+							}
+
+							if (key > root->right->key) 
+							{
+								temp = root->right;                          /* rotate left */
+								root->right = temp->left;
+								temp->left = root;
+								root = temp;
+
+								if (root->right == NULL) 
+								{
+									break;
+								}
+							}
+
+							left->right = root;                              /* link left */
+							left = root;
+							root = root->right;
+						} 
+						else 
+						{
+							break;
+						}
+					}
+
+					left->right = root->left;                                /* assemble */
+					right->left = root->right;
+					root->left = node.right;
+					root->right = node.left;
+				}
+				
+			private:
+				Node<T>* _root;
+
+			private:
+				SplayTree(const SplayTree&);
+				SplayTree& operator=(const SplayTree&);
+			};
 		};
 	};
 };
