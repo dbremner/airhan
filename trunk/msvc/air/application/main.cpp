@@ -247,6 +247,30 @@ void avl_tree()
 	}
 }
 
+void splay_tree()
+{
+    SplayTree<int> splayTree;
+    
+    for (int i = 0; i < 20; i ++)
+    {
+        splayTree.Insert(i);
+    }
+
+    for (int i = 0; i < 20; i ++)
+    {
+        assert(splayTree.Exists(i));
+    }
+
+     for (int i = 0; i < 20; i ++)
+    {
+        splayTree.Delete(i);
+    }
+
+     for (int i = 0; i < 20; i ++)
+     {
+         assert(!splayTree.Exists(i));
+     }
+}
 int main()
 {
    merge_sort();
@@ -268,4 +292,6 @@ int main()
    binomial_heap();
 
    avl_tree();
+
+   splay_tree();
 }
