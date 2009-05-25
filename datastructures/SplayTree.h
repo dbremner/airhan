@@ -42,7 +42,111 @@ namespace lianghancn
 					// TODO - reclaim nodes
 				}
 
-			
+                SplayTree()
+                    : _root(NULL)
+                    , _size(0)
+                {
+                   
+                }
+
+            public:
+                void Insert(T item)
+                {
+                    Node<T>* node = new Node<T>(item, NULL, NULL);
+                    
+                    if (_root == NULL)
+                    {
+                        node->left = NULL;
+                        node->right = NULL;
+                        _size = 1;
+                        
+                        _root = node;
+                        return;
+                    }
+
+                    Splay(item, _root);
+
+                    if (item < _root->key) 
+                    {
+                        node->left = _root->left;
+                        node->right = _root;
+                        _root->left = NULL;
+                       
+                        _size ++;
+                        _root = node;
+                    } 
+                    else if (item > _root->key) 
+                    {
+                        node->right = _root->right;
+                        node->left = _root;
+                        _root->right = NULL;
+
+                        _size ++;
+                        _root = node;
+                    } 
+                    else 
+                    { 
+                        // TODO smart ptr?
+                        delete node;
+                    }
+                }
+
+
+                void Delete(T item)
+                {
+                    Node<T>* temp = NULL;
+
+                    if (_root ==NULL)
+                    {
+                        return;
+                    }
+
+                    Splay(item, _root);
+
+                    if (item == _root->key) 
+                    {             
+                        if (_root->left == NULL)
+                        {
+                            temp = _root->right;
+                        } 
+                        else 
+                        {
+                            Splay(item, _root->left);
+                            temp->right = _root->right;
+                        }
+
+                        _size --;
+                        
+                        delete _root;
+                        _root = temp;
+                    }
+                }
+
+                bool Exists(T item)
+                {
+                    Node<T>* node = _root;
+
+                    while (node != NULL)
+                    {
+                        if (node->key == item)
+                        {
+                            // before return splay it!
+                            Splay(item, _root);
+                            return true;
+                        }
+                        else if (node->key > item)
+                        {
+                            node = node->left;
+                        }
+                        else
+                        {
+                            node = node->right;
+                        }
+                    }
+
+                    return false;
+                }
+
 			private:
 				template<typename T> struct Node
 				{
@@ -56,6 +160,14 @@ namespace lianghancn
 					{
 
 					}
+
+                    Node(T item, Node* l, Node* r)
+                        : key(item)
+                        , left(l)
+                        , right(r)
+                    {
+
+                    }
 				};
 
 			private:
@@ -152,6 +264,7 @@ namespace lianghancn
 				
 			private:
 				Node<T>* _root;
+                int _size;
 
 			private:
 				SplayTree(const SplayTree&);
