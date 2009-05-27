@@ -16,6 +16,7 @@
 #include "datastructures/AVLTree.h"
 #include "datastructures/RedBlackTree.h"
 #include "datastructures/SplayTree.h"
+#include "datastructures/Treap.h"
 
 using namespace lianghancn::air::sort;
 using namespace lianghancn::air::datastructures;
@@ -271,6 +272,17 @@ void splay_tree()
          assert(!splayTree.Exists(i));
      }
 }
+
+void treap()
+{
+    Treap<int> treap;
+
+    for (int i = 0; i < 10; i ++)
+    {
+        treap.Insert(i);
+    }
+}
+
 int main()
 {
    merge_sort();
@@ -294,4 +306,6 @@ int main()
    avl_tree();
 
    splay_tree();
+
+   treap();
 }

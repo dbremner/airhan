@@ -241,6 +241,10 @@
 						RelativePath="..\..\..\datastructures\SplayTree.h"
 						>
 					</File>
+					<File
+						RelativePath="..\..\..\datastructures\Treap.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 		</Filter>
