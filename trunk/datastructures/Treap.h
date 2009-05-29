@@ -85,7 +85,7 @@ namespace lianghancn
 					InternalDelete(_root, item);
 				}
 
-				bool Exists(T item)
+				bool Exists(T item) const
 				{
 					Node<T>* current = _root;
 					for (;;)
@@ -111,7 +111,50 @@ namespace lianghancn
 
 					return false;
 				}
+
+				T GetMax() const
+				{
+					Node<T>* current = _root;
+					
+					for (;;)
+					{
+						if (current->right == _null)
+						{
+							return current->key;
+						}
+						else
+						{
+							current = current->right;
+						}
+					}
+				}
+
+				T GetMin() const
+				{
+					Node<T>* current = _root;
+
+					for (;;)
+					{
+						if (current->left == _null)
+						{
+							return current->key;
+						}
+						else
+						{
+							current = current->left;
+						}
+					}
+				}
+
+				void InOrderTraversal() const
+				{
+					MiddleWalk(_root);
+				}
                 
+				// TODO
+				// void Split(T item);
+				// void Join(Treap& rTreap);
+
             private:
                 void RotateLeft(Node<T>*& node)
                 {
@@ -218,6 +261,16 @@ namespace lianghancn
 						Destroy(node->right);
 						delete node;
 						node = _null;
+					}
+				}
+
+				void MiddleWalk(Node<T>* node) const
+				{
+					if (node != _null)
+					{
+						MiddleWalk(node->left);
+						std::cout<<node->key<<", ";
+						MiddleWalk(node->right);
 					}
 				}
 

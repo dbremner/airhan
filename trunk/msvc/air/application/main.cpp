@@ -201,6 +201,7 @@ void binomial_heap()
 		std::cout<<bio_heap.RemoveRoot()<<";";
 	}
 
+	std::cout<<std::endl;
 	std::cout<<"binomail heap test over"<<std::endl;
 }
 
@@ -286,7 +287,13 @@ void treap()
 	TREAP_LOOP
 	{
 		treap.Insert(i);
+		assert(treap.GetMin() == 0);
+		assert(treap.GetMax() == i);
 	}
+
+	std::cout<<"Treap constructed"<<std::endl;
+	// print keys in sorted order
+	treap.InOrderTraversal();
 
 	TREAP_LOOP
 	{
