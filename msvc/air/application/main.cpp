@@ -232,17 +232,19 @@ void avl_tree()
 {
     AVLTree<int> avl;
     
-    for (int i = 0; i <10; i ++)
+#define AVL_LOOP for (int i = 0; i <10; i ++)
+
+	AVL_LOOP
     {
 		avl.Insert(i);
     }
 
-	for (int i = 0; i < 10; i ++)
+	AVL_LOOP
 	{
 		 avl.Delete(i);
 	}
 
-	for (int i = 0; i < 10; i ++)
+	AVL_LOOP
 	{
 		assert(!avl.Exists(i));
 	}
@@ -252,22 +254,24 @@ void splay_tree()
 {
     SplayTree<int> splayTree;
     
-    for (int i = 0; i < 20; i ++)
+#define SPLAY_LOOP for (int i = 0; i < 20; i ++)
+
+	SPLAY_LOOP
     {
         splayTree.Insert(i);
     }
 
-    for (int i = 0; i < 20; i ++)
+	SPLAY_LOOP
     {
         assert(splayTree.Exists(i));
     }
 
-     for (int i = 0; i < 20; i ++)
+	SPLAY_LOOP
     {
         splayTree.Delete(i);
     }
 
-     for (int i = 0; i < 20; i ++)
+	SPLAY_LOOP
      {
          assert(!splayTree.Exists(i));
      }
@@ -277,10 +281,27 @@ void treap()
 {
     Treap<int> treap;
 
-    for (int i = 0; i < 10; i ++)
-    {
-        treap.Insert(i);
-    }
+#define TREAP_LOOP   for (int i = 0; i < 1000; i ++)
+
+	TREAP_LOOP
+	{
+		treap.Insert(i);
+	}
+
+	TREAP_LOOP
+	{
+		assert(treap.Exists(i));
+	}
+
+	TREAP_LOOP
+	{
+		treap.Delete(i);
+	}
+
+	TREAP_LOOP
+	{
+		assert(!treap.Exists(i));
+	}
 }
 
 int main()
