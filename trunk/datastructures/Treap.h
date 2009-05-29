@@ -172,7 +172,7 @@ namespace lianghancn
 						InternalDelete(node->left, key);
 						return;
 					}
-					else if (key > node->right)
+					else if (key > node->key)
 					{
 						InternalDelete(node->right, key);
 					}
