@@ -246,6 +246,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="List"
+					>
+					<File
+						RelativePath="..\..\..\datastructures\SkipList.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

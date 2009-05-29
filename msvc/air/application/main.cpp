@@ -17,6 +17,7 @@
 #include "datastructures/RedBlackTree.h"
 #include "datastructures/SplayTree.h"
 #include "datastructures/Treap.h"
+#include "datastructures/SkipList.h"
 
 using namespace lianghancn::air::sort;
 using namespace lianghancn::air::datastructures;
