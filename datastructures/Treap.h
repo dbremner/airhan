@@ -39,7 +39,7 @@ namespace lianghancn
             public:
                 virtual ~Treap()
                 {
-                    // TODO - reclaim nodes
+					Destroy(_root);
                 }
 
                 explicit Treap()
@@ -79,6 +79,38 @@ namespace lianghancn
                 {
                     InternalInsert(_root, item);
                 }
+
+				void Delete(T item)
+				{
+					InternalDelete(_root, item);
+				}
+
+				bool Exists(T item)
+				{
+					Node<T>* current = _root;
+					for (;;)
+					{
+						if (current == _null)
+						{
+							break;
+						}
+
+						if (item == current->key)
+						{
+							return true;
+						}
+						else if (item < current->key)
+						{
+							current = current->left;
+						}
+						else
+						{
+							current = current->right;
+						}
+					}
+
+					return false;
+				}
                 
             private:
                 void RotateLeft(Node<T>*& node)
@@ -127,6 +159,67 @@ namespace lianghancn
                         }
                     }
                 }
+
+				void InternalDelete(Node<T>*& node, T key)
+				{
+					if (node == _null)
+					{
+						return;
+					}
+
+					if (key < node->key)
+					{
+						InternalDelete(node->left, key);
+						return;
+					}
+					else if (key > node->right)
+					{
+						InternalDelete(node->right, key);
+					}
+					
+					// find the key delete it and if need rotation, do it.
+					if (node->left == _null && node->right != _null)
+					{
+						Node<T>* temp = node->right;
+						delete node;
+						node = temp;
+					}
+					else if (node->left != _null && node->right == _null)
+					{
+						Node<T>* temp = node->left;
+						delete node;
+						node = temp;
+					}
+					else if (node->left != _null && node->right != _null)
+					{
+						if (node->left->rank < node->right->rank)
+						{
+							RotateLeft(node);
+							InternalDelete(node->left, key);
+						}
+						else
+						{
+							RotateRight(node);
+							InternalDelete(node->right, key);
+						}
+					}
+					else
+					{
+						delete node;
+						node = _null;
+					}
+				}
+
+				void Destroy(Node<T>*& node)
+				{
+					if (node != _null)
+					{
+						Destroy(node->left);
+						Destroy(node->right);
+						delete node;
+						node = _null;
+					}
+				}
 
             private:
                 Node<T>* _root;
