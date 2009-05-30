@@ -312,6 +312,39 @@ void treap()
 	}
 }
 
+void skip_list()
+{
+	SkipList<int> skiplist;
+	
+#define SKIP_LIST_LOOOP for (int i = 0; i < 20; i ++)
+
+	SKIP_LIST_LOOOP
+	{
+		std::cout<<skiplist.RandomLevel()<<std::endl;
+	}
+
+	SKIP_LIST_LOOOP
+	{
+		skiplist.Insert(i);
+	}
+
+	SKIP_LIST_LOOOP
+	{
+		assert(skiplist.Exists(i));
+	}
+
+	SKIP_LIST_LOOOP
+	{
+		skiplist.Delete(i);
+		assert(!skiplist.Exists(i));
+	}
+
+	SKIP_LIST_LOOOP
+	{
+		assert(!skiplist.Exists(i));
+	}
+}
+
 int main()
 {
    merge_sort();
@@ -337,4 +370,6 @@ int main()
    splay_tree();
 
    treap();
+
+   skip_list();
 }
