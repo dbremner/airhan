@@ -32,6 +32,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <cmath>
 
 #define AIRHAN_SKIPLIST_MAX_LEVEL 16
+#define AIRHAN_SKIPLIST_PROB 0.5
 
 namespace lianghancn
 {
@@ -41,10 +42,150 @@ namespace lianghancn
 		{
 			template<typename T> class SkipList
 			{
+			private:
+				template<typename T> struct Node
+				{
+					T data;
+					Node<T>** forward;
+
+					Node(int level, T data)
+					{
+						forward = new Node<T>*[level + 1];
+						for (int i = 0; i < level + 1; i ++)
+						{
+							forward[i] = NULL;
+						}
+
+						this->data = data;
+					}
+
+					~Node()
+					{
+						delete[] forward;
+					}
+				};
+
 			public:
 				virtual ~SkipList()
 				{
-				
+					delete _header;
+				}
+
+				SkipList()
+				{
+					_header = new Node<T>(AIRHAN_SKIPLIST_MAX_LEVEL, T());
+					_level = 0;
+				}
+
+				// test func
+				int RandomLevel()
+				{
+					return GenerateRandomLevel();		
+				}
+
+				void Insert(T data)
+				{
+					Node<T>* current = _header;
+					Node<T>* update[AIRHAN_SKIPLIST_MAX_LEVEL + 1];
+
+					for (int i = 0; i < AIRHAN_SKIPLIST_MAX_LEVEL + 1; i ++)
+					{
+						update[i] = NULL;
+					}
+
+					for (int i = _level; i >= 0; i --)
+					{
+						while (current->forward[i] != NULL && current->forward[i]->data < data)
+						{
+							current = current->forward[i];
+						}
+
+						update[i] = current;
+					}
+
+					current = current->forward[0];
+
+					if (current == NULL || current->data != data)
+					{
+						int level = GenerateRandomLevel();
+
+						if (level > _level)
+						{
+							for (int i = _level + 1; i <= level; i ++)
+							{
+								update[i] = _header;
+							}
+
+							_level = level;
+						}
+
+						current = new Node<T>(level, data);
+
+						for (int i = 0; i <= level; i ++)
+						{
+							current->forward[i] = update[i]->forward[i];
+							update[i]->forward[i] = current;
+						}
+					}
+				}
+
+				bool Exists(const T& data)
+				{
+					Node<T>* current = _header;
+
+					for (int i = _level; i >=0; i --)
+					{
+						while (current->forward[i] != NULL && current->forward[i]->data < data)
+						{
+							current = current->forward[i];
+						}
+					}
+
+					current = current->forward[0];
+
+					return current != NULL && current->data == data;
+				}
+
+				void Delete(const T& data)
+				{
+					Node<T>* current = _header;
+					Node<T>* update[AIRHAN_SKIPLIST_MAX_LEVEL + 1];
+
+					for (int i = 0; i < AIRHAN_SKIPLIST_MAX_LEVEL + 1; i ++)
+					{
+						update[i] = NULL;
+					}
+
+					for (int i = _level; i >= 0; i --)
+					{
+						while (current->forward[i] != NULL && current->forward[i]->data < data)
+						{
+							current = current->forward[i];
+						}
+
+						update[i] = current;
+					}
+					current = current->forward[0];
+
+					if (current->data == data)
+					{
+						for (int i = 0; i <= _level; i++) 
+						{
+							if (update[i]->forward[i] != current)
+							{
+								break;
+							}
+
+							update[i]->forward[i] = current->forward[i];
+						}
+
+						delete current;
+
+						while (_level > 0 && _header->forward[_level] == NULL) 
+						{
+							_level --;
+						}
+					}
 				}
 
 			private:
@@ -58,10 +199,18 @@ namespace lianghancn
 						seeded = true;
 					}
 
-					int level = (int)(log(rand()/RAND_MAX)/log(0.5)); // 0.5 is one recommended value
+					int level = 1;
+					while (((rand() * 1.0/RAND_MAX)) < AIRHAN_SKIPLIST_PROB && level < AIRHAN_SKIPLIST_MAX_LEVEL)
+					{
+						level ++;
+					}
 
-					return level < AIRHAN_SKIPLIST_MAX_LEVEL ? level : AIRHAN_SKIPLIST_MAX_LEVEL;
+					return level;
 				}
+
+			private:
+				Node<T>* _header;
+				int _level;
 
 			private:
 				SkipList(const SkipList&);
