@@ -33,7 +33,7 @@ namespace lianghancn
 	{
 		namespace sort
 		{
-			template<typename T> void InsertionSort(T a[], int n)
+			template<class T> void InsertionSort(T a[], int n)
 			{
 				for (int i = 1; i < n; i ++)
 				{

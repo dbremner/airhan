@@ -33,7 +33,7 @@ namespace lianghancn
     {
         namespace sort
         {
-            template<typename T> void BubbleSort(T a[], int n)
+            template<class T> void BubbleSort(T a[], int n)
             {
                 //
                 // two optimizations over naive bubble sort

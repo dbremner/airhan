@@ -33,7 +33,7 @@ namespace lianghancn
     {
         namespace sort
         {
-            template<typename T> void QuickSort(T a[], int n)
+            template<class T> void QuickSort(T a[], int n)
             {
                 if (n <= 1)
                 {

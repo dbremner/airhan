@@ -34,7 +34,7 @@ namespace lianghancn
     {
         namespace datastructures
         {
-            template<typename T> class Treap
+            template<class T> class Treap
             {
             public:
                 virtual ~Treap()
@@ -49,7 +49,7 @@ namespace lianghancn
                 }
 
             private:
-                template<typename T> struct Node
+                template<class T> struct Node
                 {
                     Node* left;
                     Node* right;

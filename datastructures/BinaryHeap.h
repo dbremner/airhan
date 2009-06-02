@@ -36,7 +36,7 @@ namespace lianghancn
 	{
 		namespace datastructures
 		{
-			template<typename T> class BinaryHeap : public IHeap<T>
+			template<class T> class BinaryHeap : public IHeap<T>
 			{
 			public:
 				BinaryHeap(int capacity, tHeapType eHeapType)
@@ -98,7 +98,7 @@ namespace lianghancn
 				}
 
 			private:
-				template<typename T> void FixDown(T a[], int root, int bottom)
+				template<class T> void FixDown(T a[], int root, int bottom)
 				{
 					bool done = false;
 					int swap_child_index = 0;
@@ -142,7 +142,7 @@ namespace lianghancn
                 //\return - true if for max heap, parent > child; for min heap parent < child. as a summary, the func return true whenever both elements
                 // are in correct place in the heap.
                 //
-				template<typename T> bool HeapComparator(T a, T b)
+				template<class T> bool HeapComparator(T a, T b)
 				{
 					if (_tHeapType == eMaxHeap)
 					{

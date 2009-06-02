@@ -35,7 +35,7 @@ namespace lianghancn
     {
         namespace sort
         {
-            template<typename T> void Merge(T a[], T b[], T c[], int m, int n)
+            template<class T> void Merge(T a[], T b[], T c[], int m, int n)
             {
                int i = 0, j = 0, k = 0;
                
@@ -68,7 +68,7 @@ namespace lianghancn
             //              MergeSort - sort two arrays in ascending order
             //              Two implementations : iterative bottom up merge (recursive = false) ; recursive merge (recursive = true)
             //
-            template<typename T> void MergeSort(T a[], int n, bool recursive)
+            template<class T> void MergeSort(T a[], int n, bool recursive)
             {
                 if (recursive)
                 {
