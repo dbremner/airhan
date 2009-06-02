@@ -34,7 +34,7 @@ namespace lianghancn
 	{
 		namespace datastructures
 		{
-			template<typename T> class AVLTree
+			template<class T> class AVLTree
 			{
 			public:
 				virtual ~AVLTree()
@@ -53,7 +53,7 @@ namespace lianghancn
 				}
 
 			private:
-				template<typename T> struct Node
+				template<class T> struct Node
 				{
 					T key;
 					int height;

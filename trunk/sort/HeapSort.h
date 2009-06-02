@@ -33,7 +33,7 @@ namespace lianghancn
     {
         namespace sort
         {
-            template<typename T> void HeapSort(T a[], int n)
+            template<class T> void HeapSort(T a[], int n)
             {
                 //
                 // build heap
@@ -56,7 +56,7 @@ namespace lianghancn
                 }
             }
 
-            template<typename T> void FixDown(T a[], int root, int bottom)
+            template<class T> void FixDown(T a[], int root, int bottom)
             {
                 bool done = false;
                 int max_child_index = 0;

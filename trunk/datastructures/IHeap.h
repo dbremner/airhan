@@ -39,7 +39,7 @@ namespace lianghancn
 				eMinHeap
 			} tHeapType;
 
-			template<typename T> class IHeap
+			template<class T> class IHeap
 			{
 			public:
 				virtual ~IHeap(){;}

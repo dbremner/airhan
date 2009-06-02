@@ -34,7 +34,7 @@ namespace lianghancn
 	{
 		namespace datastructures
 		{
-			template<typename T> class Deque
+			template<class T> class Deque
 			{
 			public:
 				virtual ~Deque()
@@ -46,7 +46,7 @@ namespace lianghancn
 				};
 
 			private:
-				template<typename T> struct Entry
+				template<class T> struct Entry
 				{
 					T payload;
 					Entry* previous;

@@ -37,7 +37,7 @@ namespace lianghancn
 		namespace sort
 		{
             // it only works for positive integer array
-			template<typename T> void CountSort(T a[], int n, int k)
+			template<class T> void CountSort(T a[], int n, int k)
 			{
 				T* pCount = new T[k];
 				T* pOld = new T[n];

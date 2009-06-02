@@ -37,7 +37,7 @@ namespace lianghancn
 	{
 		namespace datastructures
 		{
-			template<typename T> class BinomialHeap : public IHeap<T>
+			template<class T> class BinomialHeap : public IHeap<T>
 			{
 			public:
 				virtual ~BinomialHeap()
@@ -145,7 +145,7 @@ namespace lianghancn
 
                 private:
                     // node structure of the binomial heap
-                    template<typename T> struct Node
+                    template<class T> struct Node
                     {
                         Node* ptr_parent; // pointer to parent
                         T key; // key payload
@@ -161,7 +161,7 @@ namespace lianghancn
                     };
 
                 // link a with b to make a the child of b
-                template<typename T> Node<T>* LinkNodes(Node<T>* a, Node<T>* b)
+                template<class T> Node<T>* LinkNodes(Node<T>* a, Node<T>* b)
                 {
                     a->ptr_parent = b;
 					a->ptr_sibling = b->ptr_child;
@@ -171,7 +171,7 @@ namespace lianghancn
 					return b;
                 }
 
-                template<typename T> Node<T>* MergeRoots(Node<T>* a, Node<T>* b)
+                template<class T> Node<T>* MergeRoots(Node<T>* a, Node<T>* b)
                 {   
                     // this is actually the problem of two sorted linked list...
                     Node<T>* final = NULL;
@@ -231,7 +231,7 @@ namespace lianghancn
                 }
 
                 // union heap a and b together return new root 
-                template<typename T> Node<T>* HeapUnion(Node<T>* a, Node<T>* b)
+                template<class T> Node<T>* HeapUnion(Node<T>* a, Node<T>* b)
                 {
 					Node<T>* root = MergeRoots(a, b);
 					if (root == NULL)
@@ -284,7 +284,7 @@ namespace lianghancn
                     //\return - true if for max heap, parent > child; for min heap parent < child. as a summary, the func return true whenever both elements
                     // are in correct place in the heap.
                     //
-                    template<typename T> bool HeapComparator(T a, T b)
+                    template<class T> bool HeapComparator(T a, T b)
                     {
                         if (_tHeapType == eMaxHeap)
                         {

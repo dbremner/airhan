@@ -40,10 +40,10 @@ namespace lianghancn
 	{
 		namespace datastructures
 		{
-			template<typename T> class SkipList
+			template<class T> class SkipList
 			{
 			private:
-				template<typename T> struct Node
+				template<class T> struct Node
 				{
 					T data;
 					Node<T>** forward;

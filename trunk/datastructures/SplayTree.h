@@ -34,7 +34,7 @@ namespace lianghancn
 	{
 		namespace datastructures
 		{
-			template<typename T> class SplayTree
+			template<class T> class SplayTree
 			{
 			public:
 				virtual ~SplayTree()
@@ -148,7 +148,7 @@ namespace lianghancn
                 }
 
 			private:
-				template<typename T> struct Node
+				template<class T> struct Node
 				{
 					Node* left;
 					Node* right;
