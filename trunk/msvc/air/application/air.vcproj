@@ -255,6 +255,18 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="compression"
+				>
+				<File
+					RelativePath="..\..\..\compression\Huffman.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\compression\Huffman.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"

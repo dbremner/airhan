@@ -19,6 +19,8 @@
 #include "datastructures/Treap.h"
 #include "datastructures/SkipList.h"
 
+#include "compression/Huffman.h"
+
 using namespace lianghancn::air::sort;
 using namespace lianghancn::air::datastructures;
 
