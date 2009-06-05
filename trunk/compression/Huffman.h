@@ -28,6 +28,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 #ifndef AIRHAN_COMPRESSION_HUFFMAN_H
 #define AIRHAN_COMPRESSION_HUFFMAN_H
 
+// TODO - clean up this
+#include "assert.h"
+#include <stdlib.h>
+
 namespace lianghancn
 {
     namespace air
@@ -36,6 +40,8 @@ namespace lianghancn
         {
             struct HuffmanNode
             {
+                // here use count as frequency
+                // the more the count, the more the frequence and vice versa
                 int count;
                 HuffmanNode* parent;
                 bool leaf;
@@ -50,6 +56,29 @@ namespace lianghancn
 
                     char symbol;
                 };
+
+                // construct a leaf huffman node
+                HuffmanNode(char symbol, int count=0)
+                {
+                    this->count = count;
+                    this->symbol = symbol;
+                    leaf = true;
+                    parent = NULL;
+                }
+
+                // construct a non leaf huffman node whose left / right children are left and right respectively.
+                HuffmanNode(HuffmanNode* left, HuffmanNode* right)
+                {
+                    assert(left != NULL && right != NULL);
+                    this->left = left;
+                    this->right = right;
+                    left->parent = this;
+                    right->parent = this;
+
+                    count = left->count + right->count;
+                    leaf = false;
+                    parent = NULL;
+                }
             };
 
             struct HuffmanCode
