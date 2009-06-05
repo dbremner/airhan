@@ -47,6 +47,7 @@
 				WarningLevel="4"
 				WarnAsError="true"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4201"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -259,11 +260,35 @@
 				Name="compression"
 				>
 				<File
+					RelativePath="..\..\..\compression\BitReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\compression\BitReader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\compression\BitWriter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\compression\BitWriter.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\compression\Huffman.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\compression\Huffman.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\compression\HuffmanCompressor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\compression\HuffmanCompressor.h"
 					>
 				</File>
 			</Filter>

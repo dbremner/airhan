@@ -25,8 +25,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ****************************************************************/
 
-#ifndef AIRHAN_COMPRESSION_HUFFMAN_H
-#define AIRHAN_COMPRESSION_HUFFMAN_H
+#ifndef AIRHAN_COMPRESSION_HUFFMANCOMPRESSOR_H
+#define AIRHAN_COMPRESSION_HUFFMANCOMPRESSOR_H
+
+#include "Huffman.h"
 
 namespace lianghancn
 {
@@ -34,50 +36,14 @@ namespace lianghancn
     {
         namespace compression
         {
-            struct HuffmanNode
-            {
-                int count;
-                HuffmanNode* parent;
-                bool leaf;
-
-                union
-                {
-                    struct
-                    {
-                        HuffmanNode* left;
-                        HuffmanNode* right;
-                    };
-
-                    char symbol;
-                };
-            };
-
-            struct HuffmanCode
-            {
-                unsigned char* codeBits;
-                int codeLength;
-            };
-
-            class HuffmanEncoder
+            class HuffmanCompressor
             {
             public:
-                HuffmanEncoder(){};
-                virtual ~HuffmanEncoder(){};
+                virtual ~HuffmanCompressor(){}
 
             private:
-                HuffmanEncoder(const HuffmanEncoder&);
-                HuffmanEncoder& operator=(const HuffmanEncoder&);
-            };
-
-            class HuffmanDecoder
-            {
-            public:
-                HuffmanDecoder(){};
-                virtual ~HuffmanDecoder(){};
-
-            private:
-                HuffmanDecoder(const HuffmanDecoder&);
-                HuffmanDecoder& operator=(const HuffmanDecoder&);
+                HuffmanCompressor(const HuffmanCompressor&);
+                HuffmanCompressor& operator=(const HuffmanCompressor&);
             };
         };
     };
