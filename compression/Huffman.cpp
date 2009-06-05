@@ -25,4 +25,5 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ****************************************************************/
 
+#include <stdlib.h>
 #include "Huffman.h"
