@@ -38,6 +38,9 @@ namespace lianghancn
         {
             class HuffmanCompressor
             {
+			public:
+				static const int symbols = 256;
+
             public:
                 virtual ~HuffmanCompressor(){}
 

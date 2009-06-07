@@ -26,3 +26,5 @@ OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************/
 
 #include "HuffmanCompressor.h"
+
+using namespace lianghancn::air::compression;
