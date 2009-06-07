@@ -69,7 +69,7 @@ void HuffmanEncoder::BuildCodes(lianghancn::air::compression::HuffmanNode *&rNod
 	}
 
 	if (rNode->leaf)
-	{
+	{ 
 		_codes[rNode->symbol] = new HuffmanCode();
 		// TODO - build codes here
 	}
