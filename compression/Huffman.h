@@ -85,13 +85,41 @@ namespace lianghancn
             {
                 unsigned char* codeBits;
                 int codeLength;
+
+				HuffmanCode()
+					: codeLength(0)
+					, codeBits(NULL)
+				{
+				}
+
+				~HuffmanCode()
+				{
+					delete codeBits;
+				}
             };
+
+			struct LessThanFrequency
+			{
+				inline bool operator()(int lhs, const HuffmanNode &rhs) {return lhs < rhs.count;}
+				inline bool operator()(const HuffmanNode &lhs, const HuffmanNode &rhs) const {return lhs.count < rhs.count;}
+			};
 
             class HuffmanEncoder
             {
             public:
-                HuffmanEncoder(){};
-                virtual ~HuffmanEncoder(){};
+                HuffmanEncoder();
+				HuffmanEncoder(int symbols);
+                virtual ~HuffmanEncoder();
+
+				void Initialize(HuffmanNode**& rNodes);
+
+			private:
+				void BuildCodes(HuffmanNode*& rNode);
+
+			private:
+				HuffmanCode** _codes;
+				HuffmanNode** _nodes; 
+				int _symbols;
 
             private:
                 HuffmanEncoder(const HuffmanEncoder&);

@@ -259,38 +259,46 @@
 			<Filter
 				Name="compression"
 				>
-				<File
-					RelativePath="..\..\..\compression\BitReader.cpp"
+				<Filter
+					Name="Huffman"
 					>
-				</File>
-				<File
-					RelativePath="..\..\..\compression\BitReader.h"
+					<File
+						RelativePath="..\..\..\compression\Huffman.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\compression\Huffman.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\compression\HuffmanCompressor.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\compression\HuffmanCompressor.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="BitReaderWriter"
 					>
-				</File>
-				<File
-					RelativePath="..\..\..\compression\BitWriter.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\compression\BitWriter.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\compression\Huffman.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\compression\Huffman.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\compression\HuffmanCompressor.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\compression\HuffmanCompressor.h"
-					>
-				</File>
+					<File
+						RelativePath="..\..\..\compression\BitReader.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\compression\BitReader.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\compression\BitWriter.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\compression\BitWriter.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

@@ -27,3 +27,55 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 #include <stdlib.h>
 #include "Huffman.h"
+
+using namespace lianghancn::air::compression;
+
+HuffmanEncoder::HuffmanEncoder()
+: _symbols(256)
+, _nodes(NULL)
+, _codes(NULL)
+{
+
+}
+
+HuffmanEncoder::HuffmanEncoder(int symbols)
+: _symbols(symbols)
+, _nodes(NULL)
+, _codes(NULL)
+{
+
+}
+
+HuffmanEncoder::~HuffmanEncoder()
+{
+	delete[] _codes;
+	delete[] _nodes;
+}
+
+void HuffmanEncoder::Initialize(lianghancn::air::compression::HuffmanNode**& rNodes)
+{
+	_nodes = rNodes;
+
+	assert(sizeof(_nodes) == _symbols);
+
+	_codes = new HuffmanCode*[_symbols];
+}
+
+void HuffmanEncoder::BuildCodes(lianghancn::air::compression::HuffmanNode *&rNode)
+{
+	if (rNode == NULL)
+	{
+		return;
+	}
+
+	if (rNode->leaf)
+	{
+		_codes[rNode->symbol] = new HuffmanCode();
+		// TODO - build codes here
+	}
+	else
+	{
+		BuildCodes(rNode->left);
+		BuildCodes(rNode->right);
+	}
+}
