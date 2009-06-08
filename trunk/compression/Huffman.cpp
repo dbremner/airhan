@@ -53,8 +53,29 @@ HuffmanEncoder::HuffmanEncoder(int symbols)
 
 HuffmanEncoder::~HuffmanEncoder()
 {
-	delete[] _codes;
-	delete[] _nodes;
+    for (int i = 0; i < _symbols; i ++)
+    {
+        if (_nodes)
+        {
+            HuffmanNode* node = _nodes[i];
+            if (node)
+            {
+                delete node;
+            }
+        }
+
+        if (_codes)
+        {
+            HuffmanCode* code = _codes[i];
+            if (code)
+            {
+                delete code;
+            }
+        }
+    }
+
+    delete[] _codes;
+    delete[] _nodes;
 }
 
 void HuffmanEncoder::Initialize(lianghancn::air::compression::HuffmanNode**& rNodes)
@@ -64,6 +85,11 @@ void HuffmanEncoder::Initialize(lianghancn::air::compression::HuffmanNode**& rNo
 	assert(sizeof(_nodes) == _symbols);
 
 	_codes = new HuffmanCode*[_symbols];
+}
+
+void HuffmanEncoder::Initialize()
+{
+    _codes = new HuffmanCode*[_symbols];
 }
 
 void HuffmanEncoder::ReverseBits(value_type* codeBits, int bitsNumber)
@@ -156,17 +182,39 @@ bool HuffmanEncoder::BuildHuffmanTree()
 
     // TODO - use a better type
     std::vector<HuffmanNode*> nodeList;
+    int count = 0;
 
     for (int i = 0; i < _symbols; i ++)
     {
-        if (_nodes[i]->count != 0)
+        if (_nodes[i] != NULL && _nodes[i]->count != 0)
         {
             nodeList.push_back(_nodes[i]);
+            count ++;
         }
     }
 
-    std::make_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+    HuffmanNode* a = NULL;
+    HuffmanNode* b = NULL;
+    HuffmanNode* c = NULL;
 
+    for (int i = 0; i < count - 1; i ++)
+    {
+        std::make_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+        std::pop_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+        a = *nodeList.begin();
+
+        std::make_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+        std::pop_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+        b = *nodeList.begin();
+
+        c = new HuffmanNode(a, b);
+        a->parent = c;
+        b->parent = c;
+
+        nodeList.push_back(c);
+    }
+
+    BuildCodes(*nodeList.begin());
     return true;
 }
 
@@ -188,12 +236,14 @@ void HuffmanEncoder::ScanFrequency(const char *pName)
 
     while ((c = (char)fgetc(file)) != EOF)
     {
-        if (nodes[c] == NULL)
+        value_type index = c;
+
+        if (nodes[index] == NULL)
         {
-            nodes[c] = new HuffmanNode(c, 1);
+            nodes[index] = new HuffmanNode(index, 1);
         }
 
-        nodes[c]->count ++;
+        nodes[index]->count ++;
     }
 
     _nodes = nodes;
