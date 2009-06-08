@@ -97,9 +97,44 @@ void HuffmanEncoder::BuildCodes(lianghancn::air::compression::HuffmanNode *&rNod
 	if (rNode->leaf)
 	{ 
         HuffmanNode* current = rNode;
-        (current);
-		_codes[rNode->symbol] = new HuffmanCode();
-		// TODO - build codes here
+        int bitsNumber = 0;
+        value_type* bits = NULL;
+
+        while (current && current->parent)
+        {
+            int byteIndex = bitsNumber / 8;
+
+            // reach byte boundary
+            if (bitsNumber % 8 == 0)
+            {
+                // TODO - bad effeciency to grow one byte at a time!
+                // code block should be preallocated - need another helper class here.
+                bits = (value_type*)realloc(bits, byteIndex + 1);
+                assert(bits);
+                
+                bits[byteIndex] = 0;
+            }
+
+            if (current == current->parent->right)
+            {
+                bits[byteIndex] |= 1 << (bitsNumber % 8);
+            }
+
+            bitsNumber ++;
+            current = current->parent;
+        }
+       
+        if (bits != NULL)
+        {
+            ReverseBits(bits, bitsNumber);
+        }
+
+        HuffmanCode* code = new HuffmanCode();
+        code->codeLength = bitsNumber;
+        code->codeBits = bits;
+
+        _codes[rNode->symbol] = code;
+
 	}
 	else
 	{

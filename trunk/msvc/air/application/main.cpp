@@ -389,6 +389,7 @@ void huffman_suite()
 {
     HuffmanEncoder encoder;
 
+#define HUFFMAN_TEST_BITS_IO
 #ifdef HUFFMAN_TEST_BITS_IO
     value_type buffer[2] = {0xAB, 0xCD};
 
