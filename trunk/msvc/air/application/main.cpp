@@ -412,8 +412,7 @@ void huffman_suite()
     std::cout<<std::endl;
 #endif
 
-    encoder.Initialize();
-    encoder.ScanFrequency("G:\\MIT.txt");
+    encoder.ScanFrequency("C:\\MIT.txt");
     encoder.BuildHuffmanTree();
 }
 
@@ -421,7 +420,7 @@ int main()
 {
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 
-    _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE | _CRTDBG_MODE_DEBUG );
+    _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE);
     _CrtSetReportFile( _CRT_WARN, _CRTDBG_FILE_STDOUT );
 
     //algorithm_ds_suite();
