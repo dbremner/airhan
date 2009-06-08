@@ -26,6 +26,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 ****************************************************************/
 
 #include <string.h>
+#include <stdio.h>
+
+#include <algorithm>
+#include <vector>
 
 #include "Huffman.h"
 
@@ -142,3 +146,57 @@ void HuffmanEncoder::BuildCodes(lianghancn::air::compression::HuffmanNode *&rNod
 		BuildCodes(rNode->right);
 	}
 }
+
+bool HuffmanEncoder::BuildHuffmanTree()
+{
+    if (_nodes == NULL)
+    {
+        return false;
+    }
+
+    // TODO - use a better type
+    std::vector<HuffmanNode*> nodeList;
+
+    for (int i = 0; i < _symbols; i ++)
+    {
+        if (_nodes[i]->count != 0)
+        {
+            nodeList.push_back(_nodes[i]);
+        }
+    }
+
+    std::make_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+
+    return true;
+}
+
+void HuffmanEncoder::ScanFrequency(const char *pName)
+{
+    FILE* file = fopen(pName, "rb");
+    if (!file)
+    {
+        return;
+    }
+
+    HuffmanNode** nodes = new HuffmanNode*[_symbols];
+    for (int i = 0; i < _symbols; i ++)
+    {
+        nodes[i] = NULL;
+    }
+
+    char c = 0;
+
+    while ((c = (char)fgetc(file)) != EOF)
+    {
+        if (nodes[c] == NULL)
+        {
+            nodes[c] = new HuffmanNode(c, 1);
+        }
+
+        nodes[c]->count ++;
+    }
+
+    _nodes = nodes;
+    fclose(file);
+}
+
