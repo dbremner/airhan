@@ -21,8 +21,16 @@
 
 #include "compression/Huffman.h"
 
+#if defined(_WIN32) || defined(_WIN64)
+// VC CRT memory leak detection
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
+
 using namespace lianghancn::air::sort;
 using namespace lianghancn::air::datastructures;
+using namespace lianghancn::air::compression;
 
 #define LH_SORT_RAT int a[16] = {-1, 2, 10, 9, 8, 7, 0, 0, 3, 11, 20, 15, -90, 200, 100, -1}
 
@@ -347,31 +355,74 @@ void skip_list()
 	}
 }
 
+void algorithm_ds_suite()
+{
+    merge_sort();
+
+    bubble_sort();
+
+    insertion_sort();
+
+    selection_sort();
+
+    heap_sort();
+
+    quick_sort();
+
+    count_sort();
+
+    binary_heap();
+
+    binomial_heap();
+
+    avl_tree();
+
+    splay_tree();
+
+    treap();
+
+    skip_list();
+}
+
+
+void huffman_suite()
+{
+    HuffmanEncoder encoder;
+
+#ifdef HUFFMAN_TEST_BITS_IO
+    value_type buffer[2] = {0xAB, 0xCD};
+
+    for (int i = 0; i < 16; i ++)
+    {
+        short temp = encoder.GetBit(buffer, i);
+        std::cout<<temp;
+    }
+
+    std::cout<<std::endl;
+
+    encoder.ReverseBits(buffer, 16);
+
+    for (int i = 0; i < 16; i ++)
+    {
+        short temp = encoder.GetBit(buffer, i);
+        std::cout<<temp;
+    }
+
+    std::cout<<std::endl;
+#endif
+}
+
 int main()
 {
-   merge_sort();
+    _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 
-   bubble_sort();
 
-   insertion_sort();
+    _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE | _CRTDBG_MODE_DEBUG );
+    _CrtSetReportFile( _CRT_WARN, _CRTDBG_FILE_STDOUT );
 
-   selection_sort();
+    //algorithm_ds_suite();
 
-   heap_sort();
+    huffman_suite();
 
-   quick_sort();
-
-   count_sort();
-
-   binary_heap();
-
-   binomial_heap();
-
-   avl_tree();
-
-   splay_tree();
-
-   treap();
-
-   skip_list();
+    _CrtDumpMemoryLeaks(); 
 }

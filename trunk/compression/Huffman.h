@@ -38,6 +38,8 @@ namespace lianghancn
     {
         namespace compression
         {
+            typedef unsigned char value_type;
+
             struct HuffmanNode
             {
                 // here use count as frequency
@@ -83,7 +85,7 @@ namespace lianghancn
 
             struct HuffmanCode
             {
-                unsigned char* codeBits;
+                value_type* codeBits;
                 int codeLength;
 
 				HuffmanCode()
@@ -94,7 +96,10 @@ namespace lianghancn
 
 				~HuffmanCode()
 				{
-					delete codeBits;
+                    if (codeBits != NULL)
+                    {
+                        free(codeBits);
+                    }
 				}
             };
 
@@ -113,7 +118,16 @@ namespace lianghancn
 
 				void Initialize(HuffmanNode**& rNodes);
 
-			private:
+                inline value_type GetBit(const value_type* codeBits, int bitPosition)
+                {
+                    assert(codeBits != NULL);
+
+                    return (codeBits[bitPosition / 8] >> (bitPosition % 8)) & 1; 
+                }
+
+                void ReverseBits(value_type* codeBits, int bitsNumber);
+			
+            private:
 				void BuildCodes(HuffmanNode*& rNode);
 
 			private:
