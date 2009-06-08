@@ -118,6 +118,8 @@ namespace lianghancn
 
 				void Initialize(HuffmanNode**& rNodes);
 
+                void Initialize();
+
                 bool BuildHuffmanTree();
 
                 void ScanFrequency(const char* pName);

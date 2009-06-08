@@ -389,7 +389,7 @@ void huffman_suite()
 {
     HuffmanEncoder encoder;
 
-#define HUFFMAN_TEST_BITS_IO
+//#define HUFFMAN_TEST_BITS_IO
 #ifdef HUFFMAN_TEST_BITS_IO
     value_type buffer[2] = {0xAB, 0xCD};
 
@@ -411,12 +411,15 @@ void huffman_suite()
 
     std::cout<<std::endl;
 #endif
+
+    encoder.Initialize();
+    encoder.ScanFrequency("G:\\MIT.txt");
+    encoder.BuildHuffmanTree();
 }
 
 int main()
 {
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-
 
     _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE | _CRTDBG_MODE_DEBUG );
     _CrtSetReportFile( _CRT_WARN, _CRTDBG_FILE_STDOUT );
