@@ -48,11 +48,11 @@ namespace lianghancn
                 HuffmanNode* parent;
                 HuffmanNode* left;
                 HuffmanNode* right;
-                char symbol;
+                value_type symbol;
                 bool leaf;
 
                 // construct a leaf huffman node
-                HuffmanNode(char symbol, int count=0)
+                HuffmanNode(value_type symbol, int count=0)
                 {
                     this->count = count;
                     this->symbol = symbol;
