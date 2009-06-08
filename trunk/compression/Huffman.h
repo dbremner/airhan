@@ -46,18 +46,10 @@ namespace lianghancn
                 // the more the count, the more the frequence and vice versa
                 int count;
                 HuffmanNode* parent;
+                HuffmanNode* left;
+                HuffmanNode* right;
+                char symbol;
                 bool leaf;
-
-                union
-                {
-                    struct
-                    {
-                        HuffmanNode* left;
-                        HuffmanNode* right;
-                    };
-
-                    char symbol;
-                };
 
                 // construct a leaf huffman node
                 HuffmanNode(char symbol, int count=0)
@@ -66,6 +58,9 @@ namespace lianghancn
                     this->symbol = symbol;
                     leaf = true;
                     parent = NULL;
+
+                    left = NULL;
+                    right = NULL;
                 }
 
                 // construct a non leaf huffman node whose left / right children are left and right respectively.
