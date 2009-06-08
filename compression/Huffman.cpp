@@ -25,7 +25,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ****************************************************************/
 
-#include <stdlib.h>
+#include <string.h>
+
 #include "Huffman.h"
 
 using namespace lianghancn::air::compression;
@@ -61,6 +62,31 @@ void HuffmanEncoder::Initialize(lianghancn::air::compression::HuffmanNode**& rNo
 	_codes = new HuffmanCode*[_symbols];
 }
 
+void HuffmanEncoder::ReverseBits(value_type* codeBits, int bitsNumber)
+{
+    int bytesNumber = bitsNumber / 8 + ((bitsNumber % 8 == 0) ? 0 : 1) ;
+    
+    value_type* temp = NULL;
+    size_t codeblockSize = bytesNumber * sizeof(*temp);
+    temp = (value_type*)malloc(codeblockSize);
+    memset(temp, 0, codeblockSize);    
+    
+    int currentByte = 0;
+
+    for (int i = 0; i < bitsNumber; i ++)
+    {
+        if (i > 0 && i % 8 == 0)
+        {
+            currentByte ++;
+        }
+
+        temp[currentByte] |= (GetBit(codeBits, bitsNumber - i - 1) << (i % 8));
+    }
+
+    memcpy(codeBits, temp, codeblockSize);
+    free(temp);
+}
+
 void HuffmanEncoder::BuildCodes(lianghancn::air::compression::HuffmanNode *&rNode)
 {
 	if (rNode == NULL)
@@ -70,6 +96,8 @@ void HuffmanEncoder::BuildCodes(lianghancn::air::compression::HuffmanNode *&rNod
 
 	if (rNode->leaf)
 	{ 
+        HuffmanNode* current = rNode;
+        (current);
 		_codes[rNode->symbol] = new HuffmanCode();
 		// TODO - build codes here
 	}
