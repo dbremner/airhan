@@ -111,12 +111,7 @@ namespace lianghancn
 				HuffmanEncoder(int symbols);
                 virtual ~HuffmanEncoder();
 
-				void Initialize(HuffmanNode**& rNodes);
-
-                void Initialize();
-
                 bool BuildHuffmanTree();
-
                 void ScanFrequency(const char* pName);
 
                 // TODO - private
@@ -131,10 +126,13 @@ namespace lianghancn
 			
             private:
 				void BuildCodes(HuffmanNode*& rNode);
+				void FreeHuffmanTree(HuffmanNode*& rNode);
 
 			private:
 				HuffmanCode** _codes;
 				HuffmanNode** _nodes; 
+				HuffmanNode* _root;
+
 				int _symbols;
 
             private:

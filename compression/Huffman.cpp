@@ -39,6 +39,7 @@ HuffmanEncoder::HuffmanEncoder()
 : _symbols(256)
 , _nodes(NULL)
 , _codes(NULL)
+, _root(NULL)
 {
 
 }
@@ -47,23 +48,17 @@ HuffmanEncoder::HuffmanEncoder(int symbols)
 : _symbols(symbols)
 , _nodes(NULL)
 , _codes(NULL)
+, _root(NULL)
 {
 
 }
 
 HuffmanEncoder::~HuffmanEncoder()
 {
+	FreeHuffmanTree(_root);
+
     for (int i = 0; i < _symbols; i ++)
     {
-        if (_nodes)
-        {
-            HuffmanNode* node = _nodes[i];
-            if (node)
-            {
-                delete node;
-            }
-        }
-
         if (_codes)
         {
             HuffmanCode* code = _codes[i];
@@ -76,20 +71,6 @@ HuffmanEncoder::~HuffmanEncoder()
 
     delete[] _codes;
     delete[] _nodes;
-}
-
-void HuffmanEncoder::Initialize(lianghancn::air::compression::HuffmanNode**& rNodes)
-{
-	_nodes = rNodes;
-
-	assert(sizeof(_nodes) == _symbols);
-
-	_codes = new HuffmanCode*[_symbols];
-}
-
-void HuffmanEncoder::Initialize()
-{
-    _codes = new HuffmanCode*[_symbols];
 }
 
 void HuffmanEncoder::ReverseBits(value_type* codeBits, int bitsNumber)
@@ -122,6 +103,16 @@ void HuffmanEncoder::BuildCodes(lianghancn::air::compression::HuffmanNode *&rNod
 	if (rNode == NULL)
 	{
 		return;
+	}
+
+	if (_codes == NULL)
+	{
+		_codes = new HuffmanCode*[_symbols];
+
+		for (int i = 0; i < _symbols; i ++)
+		{
+			_codes[i] = NULL;
+		}
 	}
 
 	if (rNode->leaf)
@@ -164,7 +155,6 @@ void HuffmanEncoder::BuildCodes(lianghancn::air::compression::HuffmanNode *&rNod
         code->codeBits = bits;
 
         _codes[rNode->symbol] = code;
-
 	}
 	else
 	{
@@ -193,28 +183,41 @@ bool HuffmanEncoder::BuildHuffmanTree()
         }
     }
 
+	if (count == 0)
+	{
+		return false;
+	}
+
     HuffmanNode* a = NULL;
     HuffmanNode* b = NULL;
     HuffmanNode* c = NULL;
 
-    for (int i = 0; i < count - 1; i ++)
-    {
-        std::make_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
-        std::pop_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
-        a = *nodeList.begin();
+	std::make_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
 
-        std::make_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
-        std::pop_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
-        b = *nodeList.begin();
+	while (nodeList.size() > 1)
+    {   
+	    std::pop_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+		a = nodeList.back();
+		nodeList.pop_back();
 
+        std::pop_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+		b = nodeList.back();
+		nodeList.pop_back();
+
+		
         c = new HuffmanNode(a, b);
         a->parent = c;
         b->parent = c;
 
-        nodeList.push_back(c);
+		nodeList.push_back(c);
+		std::push_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+		
     }
 
-    BuildCodes(*nodeList.begin());
+	_root = nodeList.front();
+	
+	BuildCodes(_root);
+
     return true;
 }
 
@@ -232,11 +235,11 @@ void HuffmanEncoder::ScanFrequency(const char *pName)
         nodes[i] = NULL;
     }
 
-    char c = 0;
+    int c = 0;
 
-    while ((c = (char)fgetc(file)) != EOF)
+    while ((c = fgetc(file)) != EOF)
     {
-        value_type index = c;
+		value_type index = (value_type)c;
 
         if (nodes[index] == NULL)
         {
@@ -250,3 +253,20 @@ void HuffmanEncoder::ScanFrequency(const char *pName)
     fclose(file);
 }
 
+
+void HuffmanEncoder::FreeHuffmanTree(HuffmanNode*& rNode)
+{
+	if (rNode == NULL)
+	{
+		return;
+	}
+
+	if (!rNode->leaf)
+	{
+		FreeHuffmanTree(rNode->left);
+		FreeHuffmanTree(rNode->right);
+	}
+	
+	delete rNode;
+	rNode = NULL;
+}
