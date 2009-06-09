@@ -140,17 +140,6 @@ namespace lianghancn
                 HuffmanEncoder(const HuffmanEncoder&);
                 HuffmanEncoder& operator=(const HuffmanEncoder&);
             };
-
-            class HuffmanDecoder
-            {
-            public:
-                HuffmanDecoder(){};
-                virtual ~HuffmanDecoder(){};
-
-            private:
-                HuffmanDecoder(const HuffmanDecoder&);
-                HuffmanDecoder& operator=(const HuffmanDecoder&);
-            };
         };
     };
 };
