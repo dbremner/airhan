@@ -347,3 +347,52 @@ void HuffmanEncoder::EncodeFile(const char *pSource, const char *pDest)
     fclose(input);
     fclose(output);
 }
+
+void HuffmanEncoder::DecodeFile(const char* pSource, const char* pDest)
+{
+	assert(pSource && pDest);
+	FILE* input = fopen(pSource, "rb");
+	if (input == NULL)
+	{
+		std::cout<<"can't open input file"<<std::endl;
+		return;
+	}
+
+	FILE* output = fopen(pDest, "wb+");
+	if (output == NULL)
+	{
+		std::cout<<"can't open output file"<<std::endl;
+		return;
+	}
+
+	// for now I don't serialize the code table so this table is generated previously by encoding process.. stupid but enough.
+	// this encoder should not be used in deflate impl.. not canonical huffman tree (which, code length itself is suffice to represent a huffman tree)
+	if (_codes == NULL || _root == NULL)
+	{
+		return;
+	}
+
+	HuffmanNode* current = _root;
+	int c;
+	
+	while ((c = fgetc(input)) != EOF)
+	{
+		value_type byte = (value_type)c;
+		value_type mask = 1;
+
+		while (mask)
+		{
+			current = byte & mask ? current->right : current->left;
+			mask <<= 1;
+
+			if (current->leaf)
+			{
+				fputc(current->symbol, output);
+				current = _root;
+			}
+		}
+	}
+
+	fclose(input);
+	fclose(output);
+}

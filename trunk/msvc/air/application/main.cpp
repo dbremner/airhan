@@ -413,6 +413,7 @@ void huffman_suite()
 #endif
 
 	encoder.EncodeFile("C:\\Downloads\\tools.txt", "C:\\Downloads\\compressed.txt");
+	encoder.DecodeFile("C:\\Downloads\\compressed.txt", "C:\\Downloads\\restore.txt");
 }
 
 int main()

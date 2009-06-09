@@ -114,20 +114,19 @@ namespace lianghancn
                 bool BuildHuffmanTree();
                 void ScanFrequency(const char* pName);
                 void EncodeFile(const char* pSource, const char* pDest);
-
-                // TODO - private
-                inline value_type GetBit(const value_type* codeBits, int bitPosition)
+				void DecodeFile(const char* pSource, const char* pDest);
+             
+            private:
+				void BuildCodes(HuffmanNode*& rNode);
+				void FreeHuffmanTree(HuffmanNode*& rNode);
+				inline value_type GetBit(const value_type* codeBits, int bitPosition)
                 {
                     assert(codeBits != NULL);
 
                     return (codeBits[bitPosition / 8] >> (bitPosition % 8)) & 1; 
                 }
-
                 void ReverseBits(value_type* codeBits, int bitsNumber);
 			
-            private:
-				void BuildCodes(HuffmanNode*& rNode);
-				void FreeHuffmanTree(HuffmanNode*& rNode);
 
 			private:
 				HuffmanCode** _codes;
