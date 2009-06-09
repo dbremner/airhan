@@ -272,7 +272,7 @@ void HuffmanEncoder::ScanFrequency(const char *pName)
     _nodes = nodes;
     fclose(file);
 
-#if 1
+#if 0
     for (int i = 0; i < _symbols; i ++)
     {
         if (_nodes[i])
@@ -329,7 +329,7 @@ void HuffmanEncoder::EncodeFile(const char *pSource, const char *pDest)
         }
     }
 
-#if 0
+#if 1
     for (int i = 0; i < _symbols; i ++)
     {
         if (_codes[i] != NULL)

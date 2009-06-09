@@ -412,7 +412,7 @@ void huffman_suite()
     std::cout<<std::endl;
 #endif
 
-    encoder.EncodeFile("G:\\haha.pst", "G:\\lhmit.txt");
+    encoder.EncodeFile("G:\\MIT.txt", "G:\\lhmit.txt");
 }
 
 int main()
