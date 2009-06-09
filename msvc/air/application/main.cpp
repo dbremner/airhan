@@ -412,8 +412,7 @@ void huffman_suite()
     std::cout<<std::endl;
 #endif
 
-    encoder.ScanFrequency("C:\\MIT.txt");
-    encoder.BuildHuffmanTree();
+    encoder.EncodeFile("G:\\haha.pst", "G:\\lhmit.txt");
 }
 
 int main()

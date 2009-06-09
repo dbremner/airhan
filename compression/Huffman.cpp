@@ -31,6 +31,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 #include <algorithm>
 #include <vector>
 
+#include <iostream>
+
 #include "Huffman.h"
 
 using namespace lianghancn::air::compression;
@@ -192,15 +194,15 @@ bool HuffmanEncoder::BuildHuffmanTree()
     HuffmanNode* b = NULL;
     HuffmanNode* c = NULL;
 
-	std::make_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+	std::make_heap(nodeList.begin(), nodeList.end(), GreaterThanFrequency());
 
 	while (nodeList.size() > 1)
     {   
-	    std::pop_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+	    std::pop_heap(nodeList.begin(), nodeList.end(), GreaterThanFrequency());
 		a = nodeList.back();
 		nodeList.pop_back();
 
-        std::pop_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+        std::pop_heap(nodeList.begin(), nodeList.end(), GreaterThanFrequency());
 		b = nodeList.back();
 		nodeList.pop_back();
 
@@ -210,7 +212,7 @@ bool HuffmanEncoder::BuildHuffmanTree()
         b->parent = c;
 
 		nodeList.push_back(c);
-		std::push_heap(nodeList.begin(), nodeList.end(), LessThanFrequency());
+		std::push_heap(nodeList.begin(), nodeList.end(), GreaterThanFrequency());
 		
     }
 
@@ -221,11 +223,29 @@ bool HuffmanEncoder::BuildHuffmanTree()
     return true;
 }
 
+void HuffmanEncoder::FreeHuffmanTree(HuffmanNode*& rNode)
+{
+	if (rNode == NULL)
+	{
+		return;
+	}
+
+	if (!rNode->leaf)
+	{
+		FreeHuffmanTree(rNode->left);
+		FreeHuffmanTree(rNode->right);
+	}
+	
+	delete rNode;
+	rNode = NULL;
+}
+
 void HuffmanEncoder::ScanFrequency(const char *pName)
 {
     FILE* file = fopen(pName, "rb");
     if (!file)
     {
+        std::cout<<"can't open input file"<<std::endl;
         return;
     }
 
@@ -251,22 +271,79 @@ void HuffmanEncoder::ScanFrequency(const char *pName)
 
     _nodes = nodes;
     fclose(file);
+
+#if 1
+    for (int i = 0; i < _symbols; i ++)
+    {
+        if (_nodes[i])
+        {
+            std::cout<<_nodes[i]->count<<std::endl;
+        }
+    }
+#endif
 }
 
-
-void HuffmanEncoder::FreeHuffmanTree(HuffmanNode*& rNode)
+void HuffmanEncoder::EncodeFile(const char *pSource, const char *pDest)
 {
-	if (rNode == NULL)
-	{
-		return;
-	}
+    assert(pSource && pDest);
+    FILE* input = fopen(pSource, "rb");
+    if (input == NULL)
+    {
+        std::cout<<"can't open input file"<<std::endl;
+        return;
+    }
 
-	if (!rNode->leaf)
-	{
-		FreeHuffmanTree(rNode->left);
-		FreeHuffmanTree(rNode->right);
-	}
-	
-	delete rNode;
-	rNode = NULL;
+    FILE* output = fopen(pDest, "wb+");
+    if (output == NULL)
+    {
+        std::cout<<"can't open output file"<<std::endl;
+        return;
+    }
+
+    // get statistics and build huffman codes
+    ScanFrequency(pSource);
+    BuildHuffmanTree();
+
+    value_type codeIndex = 0;
+    value_type byte = 0;
+    int bitCount = 0;
+    int c;
+
+    // encode and output
+    while((c = fgetc(input)) != EOF)
+    {
+        codeIndex = (value_type)c;
+        value_type* codeBits = _codes[codeIndex]->codeBits;
+        int codeLength = _codes[codeIndex]->codeLength;
+
+        for (int i = 0; i <codeLength; i ++)
+        {
+            byte |= GetBit(codeBits, i) << bitCount;
+             
+            if (++ bitCount == 8)
+            {
+                fputc(byte, output);
+                byte = 0;
+                bitCount = 0;
+            }
+        }
+    }
+
+#if 0
+    for (int i = 0; i < _symbols; i ++)
+    {
+        if (_codes[i] != NULL)
+        {
+            std::cout<<_codes[i]->codeLength<<std::endl;
+        }
+    }
+#endif
+
+    if (bitCount > 0)
+    {
+        fputc(byte, output);
+    }
+
+    fclose(input);
+    fclose(output);
 }

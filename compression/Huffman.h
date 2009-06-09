@@ -98,10 +98,10 @@ namespace lianghancn
 				}
             };
 
-			struct LessThanFrequency
+			struct GreaterThanFrequency
 			{
-                inline bool operator()(int lhs, const HuffmanNode* rhs) {return lhs < rhs->count;}
-				inline bool operator()(const HuffmanNode* lhs, const HuffmanNode* rhs) const {return lhs->count < rhs->count;}
+                inline bool operator()(int lhs, const HuffmanNode* rhs) {return lhs > rhs->count;}
+				inline bool operator()(const HuffmanNode* lhs, const HuffmanNode* rhs) const {return lhs->count > rhs->count;}
 			};
 
             class HuffmanEncoder
@@ -113,6 +113,7 @@ namespace lianghancn
 
                 bool BuildHuffmanTree();
                 void ScanFrequency(const char* pName);
+                void EncodeFile(const char* pSource, const char* pDest);
 
                 // TODO - private
                 inline value_type GetBit(const value_type* codeBits, int bitPosition)
