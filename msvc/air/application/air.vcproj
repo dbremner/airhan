@@ -270,14 +270,6 @@
 						RelativePath="..\..\..\compression\Huffman.h"
 						>
 					</File>
-					<File
-						RelativePath="..\..\..\compression\HuffmanCompressor.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\compression\HuffmanCompressor.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="BitReaderWriter"

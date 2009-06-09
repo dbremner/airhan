@@ -412,7 +412,7 @@ void huffman_suite()
     std::cout<<std::endl;
 #endif
 
-    encoder.EncodeFile("G:\\MIT.txt", "G:\\lhmit.txt");
+	encoder.EncodeFile("C:\\Downloads\\tools.txt", "C:\\Downloads\\compressed.txt");
 }
 
 int main()
