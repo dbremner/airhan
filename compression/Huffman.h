@@ -134,6 +134,7 @@ namespace lianghancn
 				HuffmanNode* _root;
 
 				int _symbols;
+				int _encoded;
 
             private:
                 HuffmanEncoder(const HuffmanEncoder&);
