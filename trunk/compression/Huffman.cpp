@@ -42,6 +42,7 @@ HuffmanEncoder::HuffmanEncoder()
 , _nodes(NULL)
 , _codes(NULL)
 , _root(NULL)
+, _encoded(0)
 {
 
 }
@@ -51,6 +52,7 @@ HuffmanEncoder::HuffmanEncoder(int symbols)
 , _nodes(NULL)
 , _codes(NULL)
 , _root(NULL)
+, _encoded(0)
 {
 
 }
@@ -327,6 +329,8 @@ void HuffmanEncoder::EncodeFile(const char *pSource, const char *pDest)
                 bitCount = 0;
             }
         }
+
+		_encoded ++;
     }
 
 #if 1
@@ -374,13 +378,14 @@ void HuffmanEncoder::DecodeFile(const char* pSource, const char* pDest)
 
 	HuffmanNode* current = _root;
 	int c;
+	int decoded = 0;
 	
 	while ((c = fgetc(input)) != EOF)
 	{
 		value_type byte = (value_type)c;
 		value_type mask = 1;
 
-		while (mask)
+		while (mask && (decoded < _encoded))
 		{
 			current = byte & mask ? current->right : current->left;
 			mask <<= 1;
@@ -389,6 +394,8 @@ void HuffmanEncoder::DecodeFile(const char* pSource, const char* pDest)
 			{
 				fputc(current->symbol, output);
 				current = _root;
+
+				decoded ++;
 			}
 		}
 	}
