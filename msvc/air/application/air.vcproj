@@ -292,6 +292,18 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="compiler"
+				>
+				<Filter
+					Name="misc"
+					>
+					<File
+						RelativePath="..\..\..\compiler\misc\CountWord.c"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
