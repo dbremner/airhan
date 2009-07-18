@@ -41,6 +41,15 @@ using namespace lianghancn::air::compression;
     }\
 	std::cout<<std::endl 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+	extern int wordCount(const char* file);
+
+#ifdef __cplusplus
+}
+#endif
 
 void merge_sort()
 {
@@ -425,7 +434,9 @@ int main()
 
     //algorithm_ds_suite();
 
-    huffman_suite();
+    //huffman_suite();
+
+	std::cout<<wordCount("L:\\kosmos.txt")<<std::endl;
 
     _CrtDumpMemoryLeaks(); 
 }
