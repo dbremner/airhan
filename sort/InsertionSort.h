@@ -35,16 +35,23 @@ namespace lianghancn
 		{
 			template<class T> void InsertionSort(T a[], int n)
 			{
+                std::cout<<"insertion sort"<<std::endl;
+
 				for (int i = 1; i < n; i ++)
 				{
 					T temp = a[i];
 
-					for (int j = i - 1; j >= 0; j ++)
+                    int j = 0;
+					for (j = i - 1; j >= 0; j --)
 					{
 						if (a[j] > temp)
 						{
 							a[j + 1] = a[j];
 						}
+                        else
+                        {
+                            break;
+                        }
 					}
 
 					a[j + 1] = temp;

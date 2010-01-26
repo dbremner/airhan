@@ -73,7 +73,7 @@ void insertion_sort()
 {
 	LH_SORT_RAT;
 
-	BubbleSort(a, 16);
+    InsertionSort(a, 16);
 
 	LH_PRINT_SORT_RESULT;
 }
@@ -432,11 +432,11 @@ int main()
     _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE);
     _CrtSetReportFile( _CRT_WARN, _CRTDBG_FILE_STDOUT );
 
-    //algorithm_ds_suite();
+    algorithm_ds_suite();
 
     //huffman_suite();
 
-	std::cout<<wordCount("L:\\kosmos.txt")<<std::endl;
+	//std::cout<<wordCount("L:\\kosmos.txt")<<std::endl;
 
     _CrtDumpMemoryLeaks(); 
 }
