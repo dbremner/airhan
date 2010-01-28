@@ -304,6 +304,14 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="interview"
+				>
+				<File
+					RelativePath="..\..\..\interview\tree.c"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
