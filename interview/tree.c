@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <crtdbg.h>
 
+#include "queue.h"
+
 struct bst_node 
 {
     int data;
@@ -104,6 +106,13 @@ void visit(struct bst_node* node)
     printf("%d\n", node->data);
 }
 
+void visit_level(struct bst_node* node, int level)
+{
+    int i = 0;
+    for (; i < level; i ++) printf("  ");
+
+    visit(node);
+}
 
 void preorder_traverse(struct bst_node* root)
 {
@@ -142,6 +151,25 @@ void delete_tree(struct bst_node* root)
     free_node(root);
 }
 
+void pretty_print_layered(struct bst_node* root)
+{
+    Queue* queue = queue_new();
+    struct bst_node* node = NULL;
+    assert(root);
+    
+    queue_push_head(queue, root);
+    while (!queue_is_empty(queue))
+    {
+        node = (struct bst_node*)queue_pop_tail(queue);
+        visit(node);
+
+        if (node->left) queue_push_head(queue, node->left);
+        if (node->right) queue_push_head(queue, node->right);
+    }
+
+    queue_free(queue);
+}
+
 void c_tree_suite()
 {
     int a = 25;
@@ -155,9 +183,12 @@ void c_tree_suite()
 
     preorder_traverse(root);
 
+    printf("tree pretty print in layers: \n\n\n\n\n");
+
+    pretty_print_layered(root);
+
     delete_tree(root);
 }
-
 
 
 int main()
