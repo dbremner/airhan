@@ -308,6 +308,10 @@
 				Name="interview"
 				>
 				<File
+					RelativePath="..\..\..\interview\misc.c"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\interview\queue.c"
 					>
 				</File>
