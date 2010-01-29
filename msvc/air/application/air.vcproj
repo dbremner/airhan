@@ -312,6 +312,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="c"
+				>
+				<File
+					RelativePath="..\..\..\c\setjmp.c"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
