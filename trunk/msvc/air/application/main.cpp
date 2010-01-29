@@ -388,9 +388,10 @@ void algorithm_ds_suite()
 
     splay_tree();
 
-    treap();
+    treap(); /* it leaks here */
 
     skip_list();
+    
 }
 
 
@@ -425,6 +426,7 @@ void huffman_suite()
 	encoder.DecodeFile("C:\\Downloads\\compressed.txt", "C:\\Downloads\\restore.txt");
 }
 
+/*
 int main()
 {
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
@@ -440,3 +442,4 @@ int main()
 
     _CrtDumpMemoryLeaks(); 
 }
+*/
