@@ -139,14 +139,23 @@ namespace lianghancn
                 //
 				// rotate root to left once with root's right child as the pivot. the pivot becomes new root while old root becomes left child of new root.
                 //
-                //        A                                             B
-                //          \                                           / \
-                //           B                    ------>         A   C
-                //             \
-                //              C
-                //
-                //    old root A -- > new root B
-                //
+                //       
+				//	Left rotation from
+				//
+				//       B                            
+				//      / \                           
+				//     A   D                            
+				//        / \                       
+				//       C   E                     
+				//
+				//	Left rotation to
+				//
+				//        D                           
+ 				//		 / \                         
+				//		B   E                       
+				//	   / \                             
+				//	  A   C 
+
 				void LeftRotate(Node<T>*& root)
 				{
 					Node<T>* pivot = root->right;
@@ -164,13 +173,22 @@ namespace lianghancn
 				// rotate root to right once with root's left child as the pivot
                 // return new root after rotate
                 //
-                //         A                                                 B
-                //        /                                                  / \
-                //       B                         ----------->      C   A
-                //      /
-                //     C
-                // 
-                //      old root A ---> new root B
+				// Right rotate from:
+				//
+				//		   D
+                //        / \
+                //       B   E
+                //      / \
+                //     A   C
+				//
+				// Right rotate to:
+				//
+				//
+		        //          B
+                //         / \
+                //        A   D
+                //			 / \
+		        //          C   E 
                 //
 				void RightRotate(Node<T>*& root)
 				{
@@ -188,14 +206,6 @@ namespace lianghancn
                 //
 				// rotate root's right child right, then rotate root left
                 //
-                //             A                                       A                                                  C
-                //               \                                        \                                                / \
-                //                B                -------------->  C              --------------------> A  B
-                //               /                                           \ 
-                //              C                                            B
-                //
-                // old root B ---> new root C
-                //
 				void RightLeftRotate(Node<T>*& root)
 				{
 					RightRotate(root->right);
@@ -204,14 +214,7 @@ namespace lianghancn
 
                 //
 				// rotate root's left child left, then rotate root right
-                //
-                //              A                                             A                                   C
-                //             /                                              /                                    / \
-                //            B           ------------------>      C     ------------------>   B  A
-                //              \                                           /
-                //               C                                        B
-                //
-                //       old root B ----> new root C
+				//
 				void LeftRightRotate(Node<T>*& root)
 				{
 					LeftRotate(root->left);
@@ -226,7 +229,6 @@ namespace lianghancn
 						return;
 					}
 
-					// recursion
 					if (item < node->key)
 					{
 						InternalInsert(node->left, item);

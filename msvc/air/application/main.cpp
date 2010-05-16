@@ -426,7 +426,7 @@ void huffman_suite()
 	encoder.DecodeFile("C:\\Downloads\\compressed.txt", "C:\\Downloads\\restore.txt");
 }
 
-/*
+
 int main()
 {
     _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
@@ -434,12 +434,11 @@ int main()
     _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE);
     _CrtSetReportFile( _CRT_WARN, _CRTDBG_FILE_STDOUT );
 
-    algorithm_ds_suite();
-
+    //algorithm_ds_suite();
     //huffman_suite();
-
 	//std::cout<<wordCount("L:\\kosmos.txt")<<std::endl;
+
+	avl_tree();
 
     _CrtDumpMemoryLeaks(); 
 }
-*/
