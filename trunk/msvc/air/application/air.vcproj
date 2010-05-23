@@ -332,6 +332,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="math"
+				>
+				<File
+					RelativePath="..\..\..\math\Josephus.c"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
